@@ -1,75 +1,8 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tasty Food | Healthy & Delicious</title>
-    
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-    
-    <style>
-        body { 
-            font-family: 'Poppins', sans-serif; 
-        }
+@extends('layouts.app')
 
-        /* Custom Footer Styles */
-        .footer-link {
-            color: #6c757d;
-            text-decoration: none;
-            font-size: 0.9rem;
-            transition: 0.3s;
-        }
-        .footer-link:hover {
-            color: #fff;
-            padding-left: 5px;
-        }
-        .social-box {
-            width: 40px;
-            height: 40px;
-            background: #222;
-            color: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            text-decoration: none;
-            transition: 0.3s;
-        }
-        .social-box:hover {
-            background: #fff;
-            color: #000;
-            transform: translateY(-3px);
-        }
-        /* Utility untuk grid footer agar tidak pecah tanpa bootstrap full */
-        .footer-grid {
-            display: grid;
-            gap: 2rem;
-        }
-        @media (min-width: 768px) {
-            .footer-grid { grid-template-columns: repeat(2, 1fr); }
-        }
-        @media (min-width: 1024px) {
-            .footer-grid { grid-template-columns: 2fr 1fr 1fr 2fr; }
-        }
-    </style>
-</head>
-<body class="bg-white text-gray-900">
+@section('title', 'Healthy & Delicious')
 
-    <nav class="flex justify-between items-center px-10 py-8 max-w-7xl mx-auto">
-        <div class="text-2xl font-extrabold tracking-tighter italic">
-            TASTY FOOD
-        </div>
-        <div class="hidden md:flex space-x-10 text-xs font-bold uppercase tracking-[0.2em] text-gray-400">
-            <a href="{{ url('/home') }}" class="text-black border-b-2 border-black pb-1">Home</a>
-            <a href="{{ url('/tentang') }}" class="hover:text-black transition">Tentang</a>
-            <a href="{{ url('/berita') }}" class="hover:text-black transition">Berita</a>
-            <a href="#" class="hover:text-black transition">Galeri</a>
-            <a href="#" class="hover:text-black transition">Kontak</a>
-        </div>
-    </nav>
-
+@section('content')
     <header class="relative flex flex-col md:flex-row items-center px-10 py-12 max-w-7xl mx-auto min-h-[600px]">
         <div class="md:w-1/2 z-10">
             <div class="w-16 h-1 bg-black mb-6"></div>
@@ -136,9 +69,9 @@
             <div class="md:w-1/2 relative group overflow-hidden rounded-[40px] shadow-2xl h-[550px]">
                 <img src="https://images.unsplash.com/photo-1490818387583-1baba5e638af" class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
                 <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent p-10 flex flex-col justify-end text-white">
-                    <h4 class="text-2xl font-extrabold leading-tight uppercase mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit</h4>
-                    <p class="text-sm text-gray-300 mb-6 line-clamp-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ornare, augue eu rutrum commodo.</p>
-                    <a href="#" class="text-yellow-400 font-bold text-xs uppercase tracking-widest">Baca Selengkapnya →</a>
+                    <h4 class="text-2xl font-extrabold leading-tight uppercase mb-4">Ulasan Kuliner Terbaik Pekan Ini</h4>
+                    <p class="text-sm text-gray-300 mb-6 line-clamp-2">Temukan rahasia dibalik hidangan lezat yang kami sajikan setiap harinya dengan bahan organik pilihan.</p>
+                    <a href="{{ url('/berita') }}" class="text-yellow-400 font-bold text-xs uppercase tracking-widest">Baca Selengkapnya →</a>
                 </div>
             </div>
 
@@ -146,8 +79,8 @@
                 @for($i = 1; $i <= 4; $i++)
                     <div class="bg-white border border-gray-100 rounded-[35px] overflow-hidden hover:shadow-2xl transition-shadow p-5 flex flex-col">
                         <img src="https://images.unsplash.com/photo-1493770348161-369560ae357d?w=400" class="w-full h-36 object-cover rounded-[25px] mb-4">
-                        <h5 class="font-bold text-sm uppercase mb-2">Lorem Ipsum</h5>
-                        <p class="text-[10px] text-gray-500 mb-4 line-clamp-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                        <h5 class="font-bold text-sm uppercase mb-2">Resep Sehat #{{ $i }}</h5>
+                        <p class="text-[10px] text-gray-500 mb-4 line-clamp-2">Tips mengolah sayuran agar nutrisi tetap terjaga sempurna.</p>
                         <a href="#" class="text-yellow-500 font-extrabold text-[10px] uppercase mt-auto">Baca Selengkapnya</a>
                     </div>
                 @endfor
@@ -178,66 +111,9 @@
             @endforeach
         </div>
         <div class="mt-16 text-center">
-            <button class="bg-black text-white px-16 py-4 text-xs font-bold uppercase tracking-widest shadow-xl hover:bg-gray-900 transition">
+            <a href="{{ url('/galeri') }}" class="inline-block bg-black text-white px-16 py-4 text-xs font-bold uppercase tracking-widest shadow-xl hover:bg-gray-900 transition">
                 Lihat Lebih Banyak
-            </button>
+            </a>
         </div>
     </section>
-
-    <footer class="bg-black text-white pt-20 pb-10 px-10 mt-20">
-        <div class="max-w-7xl mx-auto">
-            <div class="footer-grid">
-                <div>
-                    <h4 class="text-2xl font-black italic uppercase mb-6 tracking-tighter">Tasty Food</h4>
-                    <p class="text-gray-400 text-sm leading-relaxed mb-8 pr-10">
-                        Tempat terbaik untuk mengeksplorasi dunia kuliner nusantara dan internasional dengan ulasan mendalam dari para ahli masak.
-                    </p>
-                    <div class="flex gap-4">
-                        <a href="#" class="social-box"><i class="bi bi-facebook"></i></a>
-                        <a href="#" class="social-box"><i class="bi bi-twitter-x"></i></a>
-                    </div>
-                </div>
-
-                <div>
-                    <h6 class="font-bold text-white uppercase mb-8 tracking-widest text-sm">Useful links</h6>
-                    <ul class="space-y-4 list-none p-0">
-                        <li><a href="#" class="footer-link">Hewan</a></li>
-                        <li><a href="#" class="footer-link">Galeri</a></li>
-                        <li><a href="#" class="footer-link">Testimonial</a></li>
-                    </ul>
-                </div>
-
-                <div>
-                    <h6 class="font-bold text-white uppercase mb-8 tracking-widest text-sm">Privacy</h6>
-                    <ul class="space-y-4 list-none p-0">
-                        <li><a href="#" class="footer-link">Karir</a></li>
-                        <li><a href="#" class="footer-link">Tentang Kami</a></li>
-                        <li><a href="#" class="footer-link">Kontak Kami</a></li>
-                        <li><a href="#" class="footer-link">Servis</a></li>
-                    </ul>
-                </div>
-
-                <div>
-                    <h6 class="font-bold text-white uppercase mb-8 tracking-widest text-sm">Contact Info</h6>
-                    <ul class="space-y-5 list-none p-0">
-                        <li class="flex items-center text-gray-400 text-sm">
-                            <i class="bi bi-envelope-fill mr-4 text-white"></i> tastyfood@gmail.com
-                        </li>
-                        <li class="flex items-center text-gray-400 text-sm">
-                            <i class="bi bi-telephone-fill mr-4 text-white"></i> +62 89528446317
-                        </li>
-                        <li class="flex items-start text-gray-400 text-sm">
-                            <i class="bi bi-geo-alt-fill mr-4 text-white"></i> Kota Bandung, Jawa Barat
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="border-t border-gray-800 mt-20 pt-8 text-center text-gray-500 text-[10px] uppercase tracking-widest">
-                COPYRIGHT ©2026 ALL RIGHTS RESERVED | TASTY FOOD
-            </div>
-        </div>
-    </footer>
-
-</body>
-</html>
+@endsection

@@ -17,3 +17,11 @@ Route::get('/tentang', function () {
 Route::get('/berita', function () {
     return view('berita');
 });
+
+Route::get('/galeri', function () {
+    return view('galeri');
+});
+
+Route::get('/kontak', function () {
+    return view('kontak');
+});

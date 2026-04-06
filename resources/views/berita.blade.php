@@ -37,8 +37,8 @@
                 <ul class="navbar-nav gap-3">
                     <li class="nav-item"><a class="nav-link" href="{{ url('/home') }}">HOME</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ url('/tentang') }}">TENTANG</a></li>
-                    <li class="nav-item"><a class="nav-link active fw-bold" href="#">BERITA</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">GALERI</a></li>
+                    <li class="nav-item"><a class="nav-link active fw-bold" href="{{ url('/berita') }}">BERITA</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url('/galeri') }}">GALERI</a></li>
                     <li class="nav-item"><a class="nav-link" href="#">KONTAK</a></li>
                 </ul>
             </div>
@@ -138,8 +138,9 @@
             </div>
 
             <div class="col-lg-2 col-6">
-                <h6 class="fw-bold text-uppercase mb-4" style="font-size: 0.85rem; letter-spacing: 1px;">Useful links</h6>
+                <h6 class="fw-bold text-uppercase mb-4" style="font-size: 0.85rem; letter-spacing: 1px;">User fullinks</h6>
                 <ul class="list-unstyled">
+                    <li class="mb-3"><a href="#" class="footer-link">Blog</a></li>
                     <li class="mb-3"><a href="#" class="footer-link">Hewan</a></li>
                     <li class="mb-3"><a href="#" class="footer-link">Galeri</a></li>
                     <li class="mb-3"><a href="#" class="footer-link">Testimonial</a></li>
