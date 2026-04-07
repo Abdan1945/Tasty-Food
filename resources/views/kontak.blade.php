@@ -49,7 +49,7 @@
                     <i class="bi bi-telephone-fill"></i>
                 </div>
                 <h4 class="font-black uppercase mb-2 tracking-widest text-sm">Phone</h4>
-                <p class="text-gray-500 text-xs italic">+62 812 3456 7890</p>
+                <p class="text-gray-500 text-xs italic">+62 89528446317</p>
             </div>
             
             <div class="flex flex-col items-center">
