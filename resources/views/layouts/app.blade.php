@@ -28,26 +28,39 @@
 
 <body class="bg-white text-gray-900">
 
-    {{-- 
-        NAVBAR: 
-        Dibuat 'absolute' agar menimpa konten di bawahnya (Hero Image).
-        'z-50' memastikan navbar tetap di lapisan paling atas.
-    --}}
-    <nav class="absolute top-0 left-0 w-full flex justify-between items-center px-16 lg:px-24 py-10 z-50 bg-transparent">
-        <div class="text-2xl font-extrabold tracking-tighter italic text-white">TASTY FOOD</div>
+  <nav class="absolute top-0 left-0 w-full flex justify-between items-center px-16 lg:px-24 py-12 z-50 bg-transparent">
+    
+    {{-- LOGO: Hitam di Home/Tentang/Kontak, Putih di Berita/Galeri --}}
+    <div class="{{ Request::is('berita', 'galeri','kontak','tentang') ? 'text-white' : 'text-black' }} font-extrabold italic tracking-tighter text-2xl uppercase transition-all duration-300">
+        TASTY FOOD
+    </div>
 
-        <div class="hidden md:flex space-x-10 text-xs font-bold uppercase tracking-[0.2em]">
-            @php $links = ['home', 'tentang', 'berita', 'galeri', 'kontak']; @endphp
-            @foreach($links as $link)
-                <a href="{{ url('/'.$link) }}" 
-                   class="{{ Request::is($link) ? 'text-white border-b-2 border-white pb-1' : 'text-gray-300 hover:text-white transition' }} no-underline">
-                   {{ ucfirst($link) }}
-                </a>
-            @endforeach
-        </div>
-    </nav>
+    {{-- MENU --}}
+    <div class="hidden md:flex space-x-10 text-xs font-bold uppercase tracking-[0.2em]">
+        @php 
+            $links = ['home', 'tentang', 'berita', 'galeri', 'kontak']; 
+            // Cek apakah halaman saat ini butuh teks putih (Berita & Galeri punya banner gelap)
+            $isDarkPage = Request::is('berita', 'galeri', 'kontak','tentang');
+        @endphp
+        
+        @foreach($links as $link)
+            @php
+                $isActive = Request::is($link) || (Request::is('/') && $link == 'home');
+                
+                // Tentukan warna dasar berdasarkan halaman
+                $baseTextColor = $isDarkPage ? 'text-white' : 'text-black';
+                
+                // Tentukan opacity untuk yang tidak aktif
+                $finalColor = $isActive ? $baseTextColor : ($isDarkPage ? 'text-white/50' : 'text-black/40');
+            @endphp
 
-    {{-- ISI KONTEN --}}
+            <a href="{{ url('/'.$link) }}" 
+               class="{{ $finalColor }} {{ $isActive ? 'border-b-2' : '' }} {{ $isDarkPage ? 'border-white' : 'border-black' }} pb-1 hover:text-opacity-100 transition-all duration-300 no-underline">
+               {{ ucfirst($link) }}
+            </a>
+        @endforeach
+    </div>
+</nav>
     <main>
         @yield('content')
     </main>
@@ -61,10 +74,10 @@
                     <p class="text-gray-400 text-sm leading-relaxed mb-8 pr-10">
                         Tempat terbaik untuk mengeksplorasi dunia kuliner nusantara dan internasional.
                     </p>
-                    <div class="flex gap-4">
-                        <a href="#" class="social-box"><i class="bi bi-facebook"></i></a>
-                        <a href="#" class="social-box"><i class="bi bi-twitter"></i></a>
-                    </div>
+                   <div class="w-20 h-20 bg-black rounded-full flex items-center justify-center mb-6 shadow-2xl text-white text-2xl">
+                    <img src="{{ asset('images/001-facebook.png') }}">
+                    <img src="{{ asset('images/Group 67@2x.png') }}">
+                </div>
                 </div>
 
                 <div>
@@ -72,7 +85,7 @@
                     <ul class="list-none p-0 space-y-4">
                         <li><a href="#" class="footer-link">Blog</a></li>
                         <li><a href="#" class="footer-link">Hewan</a></li>
-                        <li><a href="#" class="footer-link">Galeri</a></li>
+                        <li><a href="" class="footer-link">Galeri</a></li>
                         <li><a href="#" class="footer-link">Testimonial</a></li>
                     </ul>
                 </div>

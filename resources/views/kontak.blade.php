@@ -46,7 +46,7 @@
             
             <div class="flex flex-col items-center">
                 <div class="w-20 h-20 bg-black rounded-full flex items-center justify-center mb-6 shadow-2xl text-white text-2xl">
-                    <i class="bi bi-telephone-fill"></i>
+                    <img src="{{ asset('images/Group 67@2x.png') }}">
                 </div>
                 <h4 class="font-black uppercase mb-2 tracking-widest text-sm">Phone</h4>
                 <p class="text-gray-500 text-xs italic">+62 89528446317</p>

@@ -17,9 +17,7 @@
         </div>
         
         <div class="md:w-1/2 relative mt-16 md:mt-0 flex justify-center">
-            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[110%] h-[110%] bg-gray-100 rounded-full -z-10"></div>
-            <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c" 
-                 alt="Healthy Food" 
+            <img src="{{ asset('images/img-4-2000x2000.png') }}"
                  class="w-full max-w-[500px] aspect-square object-cover rounded-full shadow-2xl border-[15px] border-white">
         </div>
     </header>
@@ -34,74 +32,140 @@
         </div>
     </section>
 
-    <section class="relative py-40 px-10 min-h-[600px] flex items-center">
-        <div class="absolute inset-0 z-0">
-            <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836" class="w-full h-full object-cover brightness-[0.25]">
+    <section class="relative py-40 px-10 min-h-[600px] flex items-center overflow-hidden">
+    {{-- Background Banner --}}
+    <div class="absolute inset-0 z-0">
+        <img src="{{ asset('images/monika-grabkowska-P1aohbiT-EY-unsplash.jpg') }}" 
+             class="absolute inset-0 w-full h-full object-cover" alt="Banner">
+    </div>
+    
+    {{-- Container Utama --}}
+    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-x-8 gap-y-32 relative z-10 w-full">
+        @php 
+            $cards = [
+                [
+                    'title' => 'Salad Segar', 
+                    'img' => 'images/img-1.png',
+                    'desc' => 'Nikmati kesegaran sayuran organik pilihan langsung dari kebun kami setiap hari.'
+                ],
+                [
+                    'title' => 'Sayuran', 
+                    'img' => 'images/img-2.png',
+                    'desc' => 'Bahan baku berkualitas tinggi untuk mendukung gaya hidup sehat keluarga Anda.'
+                ],
+                [
+                    'title' => 'COFFEE', 
+                    'img' => 'images/img-3.png',
+                    'desc' => 'Biji kopi pilihan dengan aroma yang menenangkan untuk menemani pagi Anda.'
+                ], 
+                [
+                    'title' => 'Menu Utama', 
+                    'img' => 'images/img-4.png',
+                    'desc' => 'Hidangan spesial dengan bumbu rempah rahasia yang menggugah selera makan.'
+                ]
+            ]; 
+        @endphp
+
+        @foreach($cards as $card)
+            <div class="bg-white p-8 pt-20 rounded-[40px] shadow-2xl text-center relative mt-16 group hover:-translate-y-2 transition-transform duration-300">
+                
+                {{-- Lingkaran gambar melayang --}}
+                <div class="absolute -top-16 left-1/2 -translate-x-1/2 w-32 h-32 border-[8px] border-white rounded-full overflow-hidden shadow-lg bg-gray-200">
+                    <img src="{{ asset($card['img']) }}" class="w-full h-full object-cover">
+                </div>
+
+                {{-- Judul Kartu --}}
+                <h4 class="font-black text-xl mb-4 tracking-tight uppercase">{{ $card['title'] }}</h4>
+                
+                {{-- Penjelasan / Deskripsi yang sudah dipisah --}}
+                <p class="text-gray-400 text-[11px] leading-relaxed">
+                    {{ $card['desc'] }}
+                </p>
+            </div>
+        @endforeach
+    </div>
+</section>
+
+    <section class="py-24 max-w-7xl mx-auto px-10">
+    <h3 class="text-3xl font-extrabold uppercase tracking-widest text-center mb-16">Berita Kami</h3>
+    
+    <div class="flex flex-col md:flex-row gap-8">
+        {{-- 1. BERITA UTAMA (SISI KIRI) --}}
+        <div class="md:w-1/2 relative group overflow-hidden rounded-[40px] shadow-2xl h-[550px]">
+            <img src="{{ asset('images/fathul-abrar-T-qI_MI2EMA-unsplash.jpg') }}" 
+                 class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
+            
+            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent p-10 flex flex-col justify-end text-white">
+                <h4 class="text-2xl font-extrabold leading-tight uppercase mb-4">Ulasan Kuliner Terbaik Pekan Ini</h4>
+                <p class="text-sm text-gray-300 mb-6 line-clamp-2">
+                    Temukan rahasia dibalik hidangan lezat yang kami sajikan setiap harinya dengan bahan organik pilihan langsung dari petani lokal.
+                </p>
+                <a href="{{ url('/berita') }}" class="bg-yellow-400 text-black px-6 py-2 rounded-lg font-bold text-xs uppercase tracking-widest inline-block w-fit hover:bg-yellow-500 transition">
+                    Baca Selengkapnya
+                </a>
+            </div>
         </div>
-        
-        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 relative z-10 w-full">
+
+        {{-- 2. GRID BERITA KECIL (SISI KANAN) --}}
+        <div class="md:w-1/2 grid grid-cols-2 gap-6">
             @php 
-                $cards = [
-                    ['title' => 'Salad Segar', 'img' => 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd'],
-                    ['title' => 'Sayuran', 'img' => 'https://images.unsplash.com/photo-1490645935967-10de6ba17061'],
-                    ['title' => 'COFFEE', 'img' => 'https://images.unsplash.com/photo-1547592166-23ac45744acd'], 
-                    ['title' => 'LOREM IPSUM', 'img' => 'https://images.unsplash.com/photo-1467003909585-2f8a72700288']
+                $news = [
+                    [
+                        'title' => 'Resep Salad Buah', 
+                        'img' => 'images/sanket-shah-SVA7TyHxojY-unsplash.jpg', 
+                        'desc' => 'Kombinasi buah tropis dengan saus madu yang menyegarkan.'
+                    ],
+                    [
+                        'title' => 'Manfaat Sayur', 
+                        'img' => 'images/sebastian-coman-photography-eBmyH7oO5wY-unsplash.jpg', 
+                        'desc' => 'Mengapa sayuran hijau wajib ada di setiap piring makan Anda.'
+                    ],
+                    [
+                        'title' => 'Kopi Organik', 
+                        'img' => 'images/jimmy-dean-Jvw3pxgeiZw-unsplash.jpg', 
+                        'desc' => 'Mengenal biji kopi tanpa pestisida untuk kesehatan jantung.'
+                    ],
+                    [
+                        'title' => 'Tips Memasak', 
+                        'img' => 'images/luisa-brimble-HvXEbkcXjSk-unsplash.jpg', 
+                        'desc' => 'Teknik mengukus agar nutrisi sayuran tidak hilang saat dipanaskan.'
+                    ]
                 ]; 
             @endphp
-    
-            @foreach($cards as $card)
-                <div class="bg-white p-8 pt-20 rounded-[40px] shadow-2xl text-center relative mt-16 md:mt-0 group hover:-translate-y-2 transition-transform duration-300">
-                    <div class="absolute -top-16 left-1/2 -translate-x-1/2 w-32 h-32 border-[8px] border-white rounded-full overflow-hidden shadow-lg bg-gray-200">
-                        <img src="{{ $card['img'] }}?w=400&auto=format&fit=crop" class="w-full h-full object-cover">
-                    </div>
-                    <h4 class="font-black text-xl mb-4 tracking-tight uppercase">{{ $card['title'] }}</h4>
-                    <p class="text-gray-400 text-xs leading-relaxed">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ornare, augue eu rutrum commodo.
+
+            @foreach($news as $item)
+                <div class="bg-white border border-gray-100 rounded-[35px] overflow-hidden hover:shadow-2xl transition-all duration-300 p-5 flex flex-col">
+                    <img src="{{ asset($item['img']) }}" 
+                         class="w-full h-36 object-cover rounded-[25px] mb-4">
+                    
+                    <h5 class="font-bold text-sm uppercase mb-2">{{ $item['title'] }}</h5>
+                    <p class="text-[10px] text-gray-500 mb-4 line-clamp-2">
+                        {{ $item['desc'] }}
                     </p>
+                    
+                    <a href="#" class="text-yellow-500 font-extrabold text-[10px] uppercase mt-auto hover:text-yellow-600">
+                        Baca Selengkapnya →
+                    </a>
                 </div>
             @endforeach
         </div>
-    </section>
-
-    <section class="py-24 max-w-7xl mx-auto px-10">
-        <h3 class="text-3xl font-extrabold uppercase tracking-widest text-center mb-16">Berita Kami</h3>
-        <div class="flex flex-col md:flex-row gap-8">
-            <div class="md:w-1/2 relative group overflow-hidden rounded-[40px] shadow-2xl h-[550px]">
-                <img src="https://images.unsplash.com/photo-1490818387583-1baba5e638af" class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
-                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent p-10 flex flex-col justify-end text-white">
-                    <h4 class="text-2xl font-extrabold leading-tight uppercase mb-4">Ulasan Kuliner Terbaik Pekan Ini</h4>
-                    <p class="text-sm text-gray-300 mb-6 line-clamp-2">Temukan rahasia dibalik hidangan lezat yang kami sajikan setiap harinya dengan bahan organik pilihan.</p>
-                    <a href="{{ url('/berita') }}" class="text-yellow-400 font-bold text-xs uppercase tracking-widest">Baca Selengkapnya →</a>
-                </div>
-            </div>
-
-            <div class="md:w-1/2 grid grid-cols-2 gap-6">
-                @for($i = 1; $i <= 4; $i++)
-                    <div class="bg-white border border-gray-100 rounded-[35px] overflow-hidden hover:shadow-2xl transition-shadow p-5 flex flex-col">
-                        <img src="https://images.unsplash.com/photo-1493770348161-369560ae357d?w=400" class="w-full h-36 object-cover rounded-[25px] mb-4">
-                        <h5 class="font-bold text-sm uppercase mb-2">Resep Sehat #{{ $i }}</h5>
-                        <p class="text-[10px] text-gray-500 mb-4 line-clamp-2">Tips mengolah sayuran agar nutrisi tetap terjaga sempurna.</p>
-                        <a href="#" class="text-yellow-500 font-extrabold text-[10px] uppercase mt-auto">Baca Selengkapnya</a>
-                    </div>
-                @endfor
-            </div>
-        </div>
-    </section>
+    </div>
+</section>
 
     <section class="py-24 max-w-7xl mx-auto px-10">
         <h3 class="text-3xl font-extrabold uppercase tracking-widest text-center mb-16">Galeri Kami</h3>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             @php 
                 $gallery = [
-                    'https://images.unsplash.com/photo-1504674900247-0877df9cc836',
-                    'https://images.unsplash.com/photo-1543353071-873f17a7a088',
-                    'https://images.unsplash.com/photo-1555939594-58d7cb561ad1',
-                    'https://images.unsplash.com/photo-1540189549336-e6e99c3679fe',
-                    'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38',
-                    'https://images.unsplash.com/photo-1547592166-23ac45744acd'
+                    'images/brooke-lark-oaz0raysASk-unsplash.jpg',
+                    'images/ella-olsson-mmnKI8kMxpc-unsplash.jpg',
+                    'images/eiliv-aceron-ZuIDLSz3XLg-unsplash.jpg',
+                    'images/jonathan-borba-Gkc_xM3VY34-unsplash.jpg',
+                    'images/mariana-medvedeva-iNwCO9ycBlc-unsplash.jpg',
+                    'images/monika-grabkowska-P1aohbiT-EY-unsplash.jpg'
                 ]; 
             @endphp
-            
+    
             @foreach($gallery as $url)
                 <div class="overflow-hidden rounded-[30px] group shadow-lg aspect-[4/3]">
                     <img src="{{ $url }}?w=600&auto=format&fit=crop" 
