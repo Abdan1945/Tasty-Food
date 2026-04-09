@@ -5,11 +5,9 @@
 @section('content')
     <header class="relative h-[400px] flex items-center px-10 mb-20 bg-gray-200 overflow-hidden">
         <div class="absolute inset-0 z-0">
-            <img src="https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" 
-                 class="w-full h-full object-cover" 
-                 alt="Hero Image">
-            <div class="absolute inset-0 bg-black/50"></div>
-        </div>
+        <img src="{{ asset('images/monika-grabkowska-P1aohbiT-EY-unsplash.jpg') }}" 
+             class="absolute inset-0 w-full h-full object-cover" alt="Banner">
+    </div>
         
         <div class="max-w-7xl mx-auto w-full relative z-10">
             <h1 class="text-6xl font-black text-white uppercase tracking-tighter italic">Tentang Kami</h1>
@@ -31,18 +29,18 @@
                 </div>
             </div>
             <div class="flex gap-6">
-                <img src="https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg?auto=compress&cs=tinysrgb&w=600" 
+                <img src="images/brooke-lark-oaz0raysASk-unsplash.jpg" 
                      class="w-1/2 h-[450px] object-cover rounded-[50px] shadow-2xl">
-                <img src="https://images.pexels.com/photos/675951/pexels-photo-675951.jpeg?auto=compress&cs=tinysrgb&w=600" 
+                <img src="images/sebastian-coman-photography-eBmyH7oO5wY-unsplash.jpg" 
                      class="w-1/2 h-[450px] object-cover rounded-[50px] shadow-2xl mt-16">
             </div>
         </section>
 
         <section class="grid md:grid-cols-2 gap-16 items-center bg-gray-50 rounded-[60px] p-12">
             <div class="grid grid-cols-2 gap-6 order-2 md:order-1">
-                <img src="https://images.pexels.com/photos/1099680/pexels-photo-1099680.jpeg?auto=compress&cs=tinysrgb&w=600" 
+                <img src="images/fathul-abrar-T-qI_MI2EMA-unsplash.jpg" 
                      class="w-full h-64 object-cover rounded-[40px] shadow-lg">
-                <img src="https://images.pexels.com/photos/406152/pexels-photo-406152.jpeg?auto=compress&cs=tinysrgb&w=600" 
+                <img src="images/michele-blackwell-rAyCBQTH7ws-unsplash.jpg" 
                      class="w-full h-64 object-cover rounded-[40px] shadow-lg mt-8">
             </div>
             <div class="order-1 md:order-2">
@@ -61,7 +59,7 @@
                 </p>
             </div>
             <div class="relative">
-                <img src="https://images.pexels.com/photos/958545/pexels-photo-958545.jpeg?auto=compress&cs=tinysrgb&w=800" 
+                <img src="images/sanket-shah-SVA7TyHxojY-unsplash.jpg" 
                      class="w-full h-[400px] object-cover rounded-[60px] shadow-2xl border-[15px] border-white">
             </div>
         </section>

@@ -5,11 +5,12 @@
 @section('content')
     <section class="relative h-[350px] flex items-center px-10 mb-20">
         <div class="absolute inset-0 z-0">
-            <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=2070" class="w-full h-full object-cover brightness-[0.3]">
+            <img src="{{ asset('images/monika-grabkowska-P1aohbiT-EY-unsplash.jpg') }}" 
+             class="absolute inset-0 w-full h-full object-cover" alt="Banner">
         </div>
-        <div class="max-w-7xl mx-auto w-full relative z-10">
-            <h1 class="text-5xl font-black text-white uppercase tracking-tighter italic">Kontak Kami</h1>
-        </div>
+        <div class="w-full px-12 relative z-10">
+    <h1 class="text-5xl font-black text-white uppercase tracking-tighter italic">Kontak Kami</h1>
+</div>
     </section>
 
     <section class="py-10 px-10 max-w-7xl mx-auto">
@@ -38,7 +39,7 @@
         <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-16 text-center">
             <div class="flex flex-col items-center">
                 <div class="w-20 h-20 bg-black rounded-full flex items-center justify-center mb-6 shadow-2xl text-white text-2xl">
-                    <i class="bi bi-envelope-fill"></i>
+                     <img src="{{ asset('images/Group 66@2x.png') }}">
                 </div>
                 <h4 class="font-black uppercase mb-2 tracking-widest text-sm">Email</h4>
                 <p class="text-gray-500 text-xs italic">tastyfood@gmail.com</p>
@@ -54,7 +55,7 @@
             
             <div class="flex flex-col items-center">
                 <div class="w-20 h-20 bg-black rounded-full flex items-center justify-center mb-6 shadow-2xl text-white text-2xl">
-                    <i class="bi bi-geo-alt-fill"></i>
+                    <img src="{{ asset('images/Group 68@2x.png') }}">
                 </div>
                 <h4 class="font-black uppercase mb-2 tracking-widest text-sm">Location</h4>
                 <p class="text-gray-500 text-xs italic">Kota Bandung, Jawa Barat</p>

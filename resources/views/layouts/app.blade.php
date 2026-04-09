@@ -72,12 +72,20 @@
                 <div>
                     <h4 class="text-2xl font-black italic uppercase mb-6 tracking-tighter">Tasty Food</h4>
                     <p class="text-gray-400 text-sm leading-relaxed mb-8 pr-10">
-                        Tempat terbaik untuk mengeksplorasi dunia kuliner nusantara dan internasional.
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores incidunt mollitia iure, quis laudantium ipsam, officiis qui non cupiditate quos vel tempore fugit voluptatum vero sed facere adipisci facilis. Quibusdam.
                     </p>
-                   <div class="w-20 h-20 bg-black rounded-full flex items-center justify-center mb-6 shadow-2xl text-white text-2xl">
-                    <img src="{{ asset('images/001-facebook.png') }}">
-                    <img src="{{ asset('images/Group 67@2x.png') }}">
-                </div>
+                   <div class="flex items-center gap-3 mt-6">
+    {{-- Ikon Facebook dengan huruf f lebih besar --}}
+<div class="w-10 h-10 bg-[#3b5998] rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition overflow-hidden">
+    {{-- Di sini ukuran saya naikkan dari w-5 menjadi w-7 agar huruf f terlihat lebih dominan --}}
+    <img src="{{ asset('images/001-facebook.png') }}" class="w-7 h-7 object-contain">
+</div>
+
+    {{-- Ikon Twitter --}}
+    <div class="w-10 h-10 bg-[#55acee] rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition">
+        <img src="{{ asset('images/002-twitter.png') }}" class="w-7 h-7 object-contain">
+    </div>
+</div>
                 </div>
 
                 <div>
@@ -100,14 +108,34 @@
                     </ul>
                 </div>
 
-                <div>
-                    <h6 class="font-bold uppercase mb-8 tracking-widest text-sm">Contact Info</h6>
-                    <ul class="list-none p-0 space-y-5 text-gray-400 text-sm">
-                        <li class="flex items-center"><i class="bi bi-envelope-fill mr-4 text-white"></i> tastyfood@gmail.com</li>
-                        <li class="flex items-center"><i class="bi bi-telephone-fill mr-4 text-white"></i> +62 89528446317</li>
-                        <li class="flex items-start"><i class="bi bi-geo-alt-fill mr-4 text-white"></i> Kota Bandung, Jawa Barat</li>
-                    </ul>
-                </div>
+               <div>
+    <h6 class="font-bold uppercase mb-8 tracking-widest text-sm text-white">Contact Info</h6>
+    <ul class="list-none p-0 space-y-4 text-gray-400 text-sm">
+        {{-- Email --}}
+        <li class="flex items-center">
+            <div class="w-10 h-10 flex-shrink-0 mr-4 flex items-center justify-center">
+                <img src="{{ asset('images/Group 66.png') }}" class="max-w-full max-h-full object-contain" alt="Mail">
+            </div>
+            <span class="leading-none">tastyfood@gmail.com</span>
+        </li>
+        
+        {{-- Phone --}}
+        <li class="flex items-center">
+            <div class="w-10 h-10 flex-shrink-0 mr-4 flex items-center justify-center">
+                <img src="{{ asset('images/Group 67.png') }}" class="max-w-full max-h-full object-contain" alt="Phone">
+            </div>
+            <span class="leading-none">+62 89528446317</span>
+        </li>
+        
+        {{-- Location --}}
+        <li class="flex items-center"> {{-- Diubah dari items-start ke items-center --}}
+            <div class="w-10 h-10 flex-shrink-0 mr-4 flex items-center justify-center">
+                <img src="{{ asset('images/Group 68.png') }}" class="max-w-full max-h-full object-contain" alt="Location">
+            </div>
+            <span class="leading-none">Kota Bandung, Jawa Barat</span>
+        </li>
+    </ul>
+</div>
             </div>
 
             <div class="border-t border-gray-800 mt-20 pt-8 text-center text-gray-500 text-[10px] uppercase tracking-widest">
