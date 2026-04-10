@@ -69,9 +69,6 @@
             TASTY FOOD
         </div>
 
-        {{-- WRAPPER MENU --}}
-        {{-- Jika halaman HOME, pakai 'justify-start' agar menu di kiri. --}}
-        {{-- Jika halaman LAIN, pakai 'justify-end' agar menu di kanan. --}}
         <div class="hidden md:flex flex-1 items-center {{ Request::is('home', '/') ? 'justify-start' : 'justify-end' }} space-x-10 text-xs font-bold uppercase tracking-[0.2em]">
             
             @php 

@@ -3,16 +3,19 @@
 @section('title', 'Tentang Kami - Tasty Food')
 
 @section('content')
-    <header class="relative h-[400px] flex items-center px-10 mb-20 bg-gray-200 overflow-hidden">
-        <div class="absolute inset-0 z-0">
+    <header class="relative h-[400px] flex items-center px-16 lg:px-24 mb-20 bg-gray-200 overflow-hidden">
+    
+    <div class="absolute inset-0 z-0">
         <img src="{{ asset('images/monika-grabkowska-P1aohbiT-EY-unsplash.jpg') }}" 
              class="absolute inset-0 w-full h-full object-cover" alt="Banner">
     </div>
-        
-        <div class="max-w-7xl mx-auto w-full relative z-10">
-            <h1 class="text-6xl font-black text-white uppercase tracking-tighter italic">Tentang Kami</h1>
-        </div>
-    </header>
+    
+    <div class="w-full relative z-10">
+        <h1 class="text-6xl font-black text-white uppercase tracking-tighter italic">
+            Tentang Kami
+        </h1>
+    </div>
+</header>
 
     <main class="max-w-7xl mx-auto px-10 py-10 space-y-32">
         
