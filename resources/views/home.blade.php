@@ -44,24 +44,28 @@
         @php 
             $cards = [
                 [
-                    'title' => 'Salad Segar', 
+                    'title' => 'Salad Bowl', 
                     'img' => 'images/img-1.png',
-                    'desc' => 'Nikmati kesegaran sayuran organik pilihan langsung dari kebun kami setiap hari.'
+                    'desc' => 'Keseimbangan dalam setiap suapan. Kadang yang kita butuhkan cuma semangkuk kebaikan alami 
+                               untuk menjernihkan pikiran dan menyehatkan badan.'
                 ],
                 [
-                    'title' => 'Sayuran', 
+                    'title' => 'Salmon', 
                     'img' => 'images/img-2.png',
-                    'desc' => 'Bahan baku berkualitas tinggi untuk mendukung gaya hidup sehat keluarga Anda.'
+                    'desc' =>'Nutrisi lengkap dalam satu piring. Protein berkualitas dari salmon panggang, 
+                              serat dari sayuran hijau, dan karbohidrat kompleks. Bahan bakar terbaik untuk tubuhmu hari ini.'
                 ],
                 [
-                    'title' => 'COFFEE', 
+                    'title' => 'Ramen Udang', 
                     'img' => 'images/img-3.png',
-                    'desc' => 'Biji kopi pilihan dengan aroma yang menenangkan untuk menemani pagi Anda.'
+                    'desc' => 'Jujur, perpaduan udang sama kuah ramennya nagih banget. Ditambah kacang kapri biar 
+                               ada kriuk-kriuk segernya. Fix, ini favorit baru!'
                 ], 
                 [
-                    'title' => 'Menu Utama', 
+                    'title' => 'Charcuterie Board', 
                     'img' => 'images/img-4.png',
-                    'desc' => 'Hidangan spesial dengan bumbu rempah rahasia yang menggugah selera makan.'
+                    'desc' => 'Berasa lagi piknik di Eropa kalau piringnya begini. Kadang hidup emang butuh yang cakep 
+                               dilihat dan enak dimakan kaya gini.'
                 ]
             ]; 
         @endphp
