@@ -14,7 +14,6 @@
     {{-- Icons --}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     
-    {{-- Stack untuk CSS tambahan dari halaman lain (PENTING) --}}
     @stack('styles')
     
     <style>
@@ -58,45 +57,46 @@
 
 <body class="bg-white text-gray-900">
 
-   {{-- NAVBAR --}}
-<nav class="absolute top-0 left-0 w-full flex items-center px-16 lg:px-24 py-12 z-50 bg-transparent">
-    
-    {{-- Container Logo dan Menu --}}
-    <div class="flex items-center w-full">
-        
-        {{-- LOGO --}}
-        <div class="{{ Request::is('berita', 'galeri','kontak','tentang') ? 'text-white' : 'text-black' }} font-extrabold italic tracking-tighter text-2xl uppercase transition-all duration-300 mr-20">
-            TASTY FOOD
-        </div>
+    {{-- NAVBAR: Hanya disembunyikan jika di halaman login atau register --}}
+    @if(!Request::is('login') && !Request::is('register'))
+    <nav class="absolute top-0 left-0 w-full flex items-center px-16 lg:px-24 py-12 z-50 bg-transparent">
+        <div class="flex items-center w-full">
+            {{-- LOGO --}}
+            <div class="{{ Request::is('berita', 'galeri','kontak','tentang', 'dashboard') ? 'text-white' : 'text-black' }} font-extrabold italic tracking-tighter text-2xl uppercase transition-all duration-300 mr-20">
+                TASTY FOOD
+            </div>
 
-        <div class="hidden md:flex flex-1 items-center {{ Request::is('home', '/') ? 'justify-start' : 'justify-end' }} space-x-10 text-xs font-bold uppercase tracking-[0.2em]">
-            
-            @php 
-                $links = ['home', 'tentang', 'berita', 'galeri', 'kontak']; 
-                $isDarkPage = Request::is('berita', 'galeri', 'kontak','tentang');
-            @endphp
-            
-            @foreach($links as $link)
-                @php
-                    $isActive = Request::is($link) || (Request::is('/') && $link == 'home');
-                    $baseTextColor = $isDarkPage ? 'text-white' : 'text-black';
-                    $finalColor = $isActive ? $baseTextColor : ($isDarkPage ? 'text-white/50' : 'text-black/40');
+            <div class="hidden md:flex flex-1 items-center {{ Request::is('home', '/') ? 'justify-start' : 'justify-end' }} space-x-10 text-xs font-bold uppercase tracking-[0.2em]">
+                @php 
+                    $links = ['home', 'tentang', 'berita', 'galeri', 'kontak']; 
+                    // Dashboard juga dianggap halaman gelap agar teks navbar putih jika diperlukan
+                    $isDarkPage = Request::is('berita', 'galeri', 'kontak','tentang', 'dashboard');
                 @endphp
+                
+                @foreach($links as $link)
+                    @php
+                        $isActive = Request::is($link) || (Request::is('/') && $link == 'home');
+                        $baseTextColor = $isDarkPage ? 'text-white' : 'text-black';
+                        $finalColor = $isActive ? $baseTextColor : ($isDarkPage ? 'text-white/50' : 'text-black/40');
+                    @endphp
 
-                <a href="{{ url('/'.$link) }}" 
-                   class="{{ $finalColor }} {{ $isActive ? 'border-b-2' : '' }} {{ $isDarkPage ? 'border-white' : 'border-black' }} pb-1 hover:text-opacity-100 transition-all duration-300 no-underline">
-                   {{ ucfirst($link) }}
-                </a>
-            @endforeach
+                    <a href="{{ url('/'.$link) }}" 
+                       class="{{ $finalColor }} {{ $isActive ? 'border-b-2' : '' }} {{ $isDarkPage ? 'border-white' : 'border-black' }} pb-1 hover:text-opacity-100 transition-all duration-300 no-underline">
+                       {{ ucfirst($link) }}
+                    </a>
+                @endforeach
+            </div>
         </div>
-    </div>
-</nav>
+    </nav>
+    @endif
+
     {{-- MAIN CONTENT --}}
     <main>
         @yield('content')
     </main>
 
-    {{-- FOOTER --}}
+    {{-- FOOTER: Hanya disembunyikan jika di halaman login atau register --}}
+    @if(!Request::is('login') && !Request::is('register'))
     <footer class="bg-black text-white pt-20 pb-10 mt-20">
         <div class="w-full px-16 lg:px-24">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -165,8 +165,8 @@
             </div>
         </div>
     </footer>
+    @endif
 
-    {{-- Stack untuk JavaScript tambahan --}}
     @stack('scripts')
 </body>
 </html>
