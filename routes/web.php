@@ -2,7 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\BeritaController; // Pastikan ini di-import
+use App\Http\Controllers\BeritaController;
+use App\Http\Controllers\Admin\GaleriController; 
 use App\Models\User;
 use App\Models\News;
 use App\Models\Gallery;
@@ -35,30 +36,37 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', function () {
         $totalUser   = User::count(); 
         $totalBerita = News::count(); 
-        $totalFoto   = Gallery::count(); 
+        $totalFoto   = Gallery::count(); // Menggunakan model Gallery
 
         return view('dashboard', compact('totalUser', 'totalBerita', 'totalFoto'));
     })->name('dashboard');
 
-    // KELOLA BERITA (Menggunakan Resource Controller)
-    // Ini otomatis mencakup: index, create, store, edit, update, destroy
+    // KELOLA BERITA (Resource)
     Route::resource('dashboard/berita', BeritaController::class)->names([
         'index'   => 'berita.index',
         'create'  => 'berita.create',
         'store'   => 'berita.store',
+        'show'    => 'berita.show',
         'edit'    => 'berita.edit',
         'update'  => 'berita.update',
         'destroy' => 'berita.destroy',
     ]);
 
-    // KELOLA GALERI
-    Route::get('/dashboard/galeri', function () { 
-        return view('admin.galeri.index'); // Sesuaikan foldernya jika nanti dibuat folder khusus
-    })->name('admin.galeri');
+    // KELOLA GALERI (Resource - Sudah disesuaikan agar tidak bentrok)
+    Route::resource('dashboard/galeri', GaleriController::class)->names([
+        'index'   => 'galeri.index',
+        'create'  => 'galeri.create',
+        'store'   => 'galeri.store',
+        'show'    => 'galeri.show',
+        'edit'    => 'galeri.edit',
+        'update'  => 'galeri.update',
+        'destroy' => 'galeri.destroy',
+    ]);
 
     // KELOLA USER
     Route::get('/dashboard/users', function () {
         $users = User::all();
         return view('admin.users', compact('users'));
     })->name('admin.users');
+    
 });

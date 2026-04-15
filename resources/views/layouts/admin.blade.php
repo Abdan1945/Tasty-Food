@@ -38,15 +38,15 @@
                     <p class="text-[10px] text-gray-500 uppercase font-bold tracking-widest">Manajemen</p>
                 </div>
 
-                {{-- Kelola Berita (DISESUAIKAN) --}}
+                {{-- Kelola Berita --}}
                 <a href="{{ route('berita.index') }}" 
                    class="flex items-center gap-3 p-3 rounded-lg transition-all duration-300 {{ Request::is('dashboard/berita*') ? 'bg-orange-500 text-white' : 'text-gray-400 hover:bg-white/10 hover:text-white' }}">
                     <i class="bi bi-newspaper"></i> 
                     <span class="text-sm font-medium">Kelola Berita</span>
                 </a>
 
-                {{-- Galeri Foto --}}
-                <a href="{{ route('admin.galeri') }}" 
+                {{-- Galeri Foto (DISESUAIKAN: admin.galeri -> galeri.index) --}}
+                <a href="{{ route('galeri.index') }}" 
                    class="flex items-center gap-3 p-3 rounded-lg transition-all duration-300 {{ Request::is('dashboard/galeri*') ? 'bg-orange-500 text-white' : 'text-gray-400 hover:bg-white/10 hover:text-white' }}">
                     <i class="bi bi-images"></i> 
                     <span class="text-sm font-medium">Galeri Foto</span>
@@ -86,6 +86,7 @@
                     <div class="h-6 w-[1px] bg-gray-200"></div>
 
                     <div class="flex items-center gap-3">
+                        @auth
                         <div class="text-right hidden sm:block">
                             <p class="text-xs font-bold text-gray-900 leading-none">{{ Auth::user()->name }}</p>
                             <p class="text-[10px] text-gray-500 mt-1">Administrator</p>
@@ -93,6 +94,7 @@
                         <div class="w-10 h-10 bg-orange-500 rounded-xl flex items-center justify-center text-white font-bold shadow-lg shadow-orange-200">
                             {{ substr(Auth::user()->name, 0, 1) }}
                         </div>
+                        @endauth
                     </div>
                 </div>
             </header>
