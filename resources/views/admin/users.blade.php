@@ -19,7 +19,7 @@
                     <th class="px-6 py-4 text-xs font-bold uppercase text-gray-400 text-center">Status</th>
                 </tr>
             </thead>
-            <tbody class="divide-y divide-gray-100">
+            <tbody cl   ass="divide-y divide-gray-100">
                 @foreach($users as $user)
                 <tr class="hover:bg-gray-50/50 transition">
                     <td class="px-6 py-4">

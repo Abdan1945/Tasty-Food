@@ -24,7 +24,7 @@
             <div>
                 <p class="text-sm text-gray-500 font-medium">Total Foto</p>
                 <h3 class="text-2xl font-bold mt-1">{{ $totalFoto }}</h3>
-                <a href="{{ route('admin.galeri') }}" class="text-xs text-green-600 hover:underline mt-2 inline-block">
+                <a href="{{ route('galeri.index') }}" class="text-xs text-green-600 hover:underline mt-2 inline-block">
                     Lihat Galeri &rarr;
                 </a>
             </div>
