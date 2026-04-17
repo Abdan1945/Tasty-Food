@@ -6,7 +6,7 @@ use App\Http\Controllers\BeritaController;
 use App\Http\Controllers\Admin\GaleriController; 
 use App\Models\User;
 use App\Models\News;
-use App\Models\Gallery;
+use App\Models\Gallery; // Pastikan model Gallery di-import
 
 /*
 |--------------------------------------------------------------------------
@@ -19,7 +19,13 @@ Route::get('/', function () { return view('home'); });
 Route::get('/home', function () { return view('home'); })->name('home');
 Route::get('/tentang', function () { return view('tentang'); });
 Route::get('/berita', function () { return view('berita'); });
-Route::get('/galeri', function () { return view('galeri'); });
+
+// PERBAIKAN DI SINI: Mengambil data Gallery langsung untuk halaman publik
+Route::get('/galeri', function () { 
+    $galeries = Gallery::latest()->get(); // Ambil data foto terbaru
+    return view('galeri', compact('galeries')); // Kirim ke galeri.blade.php
+});
+
 Route::get('/kontak', function () { return view('kontak'); });
 
 // --- AUTH ROUTES ---
@@ -36,7 +42,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', function () {
         $totalUser   = User::count(); 
         $totalBerita = News::count(); 
-        $totalFoto   = Gallery::count(); // Menggunakan model Gallery
+        $totalFoto   = Gallery::count(); 
 
         return view('dashboard', compact('totalUser', 'totalBerita', 'totalFoto'));
     })->name('dashboard');
@@ -52,7 +58,7 @@ Route::middleware(['auth'])->group(function () {
         'destroy' => 'berita.destroy',
     ]);
 
-    // KELOLA GALERI (Resource - Sudah disesuaikan agar tidak bentrok)
+    // KELOLA GALERI (Resource - Menggunakan GaleriController untuk CRUD Admin)
     Route::resource('dashboard/galeri', GaleriController::class)->names([
         'index'   => 'galeri.index',
         'create'  => 'galeri.create',
