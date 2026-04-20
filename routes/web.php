@@ -6,7 +6,8 @@ use App\Http\Controllers\BeritaController;
 use App\Http\Controllers\Admin\GaleriController; 
 use App\Models\User;
 use App\Models\News;
-use App\Models\Gallery; // Pastikan model Gallery di-import
+use App\Models\Gallery;
+use App\Http\Controllers\GoogleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,6 +35,10 @@ Route::get('/register', [AuthController::class, 'showRegister'])->name('register
 Route::post('/login', [AuthController::class, 'login'])->name('login.post');
 Route::post('/register', [AuthController::class, 'register'])->name('register.post');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+// Tambahan untuk Google
+Route::get('auth/google', [GoogleController::class, 'redirectToGoogle'])->name('google.login');
+Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);
 
 // --- HALAMAN ADMIN (TERPROTEKSI) ---
 Route::middleware(['auth'])->group(function () {
