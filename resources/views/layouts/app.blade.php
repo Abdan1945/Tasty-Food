@@ -9,7 +9,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
 
     {{-- Font --}}
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
 
     {{-- Icons --}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
@@ -19,11 +19,18 @@
     <style>
         body { 
             font-family: 'Poppins', sans-serif; 
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
             overflow-x: hidden; 
             margin: 0; 
             padding: 0; 
         }
         
+        main {
+            flex-grow: 1;
+        }
+
         .footer-link { 
             color: #6c757d; 
             text-decoration: none; 
@@ -57,19 +64,20 @@
 
 <body class="bg-white text-gray-900">
 
-    {{-- NAVBAR: Hanya disembunyikan jika di halaman login atau register --}}
+    {{-- NAVBAR --}}
     @if(!Request::is('login') && !Request::is('register'))
-    <nav class="absolute top-0 left-0 w-full flex items-center px-16 lg:px-24 py-12 z-50 bg-transparent">
+    <nav class="absolute top-0 left-0 w-full flex items-center px-16 lg:px-24 py-12 z-[100] bg-transparent">
         <div class="flex items-center w-full">
-            {{-- LOGO --}}
-            <div class="{{ Request::is('berita', 'galeri','kontak','tentang', 'dashboard') ? 'text-white' : 'text-black' }} font-extrabold italic tracking-tighter text-2xl uppercase transition-all duration-300 mr-20">
+            
+            {{-- 1. LOGO --}}
+            <div class="{{ Request::is('berita', 'galeri','kontak','tentang', 'dashboard') ? 'text-white' : 'text-black' }} font-extrabold italic tracking-tighter text-2xl uppercase mr-16">
                 TASTY FOOD
             </div>
 
-            <div class="hidden md:flex flex-1 items-center {{ Request::is('home', '/') ? 'justify-start' : 'justify-end' }} space-x-10 text-xs font-bold uppercase tracking-[0.2em]">
+            {{-- 2. MENU NAVIGASI (DI KIRI) --}}
+            <div class="hidden md:flex items-center space-x-10 text-xs font-bold uppercase tracking-[0.2em] flex-1">
                 @php 
                     $links = ['home', 'tentang', 'berita', 'galeri', 'kontak']; 
-                    // Dashboard juga dianggap halaman gelap agar teks navbar putih jika diperlukan
                     $isDarkPage = Request::is('berita', 'galeri', 'kontak','tentang', 'dashboard');
                 @endphp
                 
@@ -86,6 +94,35 @@
                     </a>
                 @endforeach
             </div>
+
+            {{-- 3. PROFILE AREA (DI KANAN POJOK) --}}
+            <div class="flex items-center border-l {{ $isDarkPage ? 'border-white/20' : 'border-black/10' }} pl-8 ml-4">
+                @auth
+                    <div class="flex items-center gap-3">
+                        <div class="flex flex-col items-end leading-tight">
+                            <span class="text-[10px] font-black {{ $isDarkPage ? 'text-white' : 'text-black' }} uppercase tracking-tighter">
+                                {{ Auth::user()->name }}
+                            </span>
+                            <form action="{{ route('logout') }}" method="POST" class="m-0 p-0 leading-none">
+                                @csrf
+                                <button type="submit" class="text-[9px] font-bold text-red-500 uppercase hover:underline">Logout</button>
+                            </form>
+                        </div>
+                        <a href="{{ url('/dashboard') }}" 
+                           class="w-10 h-10 {{ $isDarkPage ? 'bg-white text-black' : 'bg-black text-white' }} rounded-full flex items-center justify-center text-[11px] font-black hover:bg-orange-500 hover:text-white transition-all shadow-lg border-2 {{ $isDarkPage ? 'border-white' : 'border-black' }}">
+                            {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
+                        </a>
+                    </div>
+                @endauth
+
+                @guest
+                    <a href="{{ route('login') }}" 
+                       class="{{ $isDarkPage ? 'bg-white text-black' : 'bg-black text-white' }} px-8 py-2.5 rounded-full text-[10px] font-black uppercase tracking-widest hover:bg-orange-500 hover:text-white transition-all shadow-md">
+                        Login
+                    </a>
+                @endguest
+            </div>
+
         </div>
     </nav>
     @endif
@@ -95,7 +132,7 @@
         @yield('content')
     </main>
 
-    {{-- FOOTER: Hanya disembunyikan jika di halaman login atau register --}}
+    {{-- FOOTER --}}
     @if(!Request::is('login') && !Request::is('register'))
     <footer class="bg-black text-white pt-20 pb-10 mt-20">
         <div class="w-full px-16 lg:px-24">

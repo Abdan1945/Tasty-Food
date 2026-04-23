@@ -192,7 +192,6 @@
             </div>
             
             <div class="flex flex-col items-start leading-none">
-                <span class="text-[9px] uppercase tracking-[0.2em] opacity-60 mb-1 font-bold">Akses Admin</span>
                 <span class="text-sm font-black uppercase tracking-tight">Login Disini</span>
             </div>
 

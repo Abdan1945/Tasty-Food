@@ -36,7 +36,10 @@
                         @auth
                         <div class="text-right hidden sm:block">
                             <p class="text-xs font-bold text-gray-900 leading-none">{{ Auth::user()->name }}</p>
-                            <p class="text-[10px] text-gray-500 mt-1">Administrator</p>
+                            {{-- LOGIKA ROLE DINAMIS DI SINI --}}
+                            <p class="text-[10px] text-gray-500 mt-1 uppercase font-semibold tracking-wider">
+                                {{ Auth::user()->role == 'admin' ? 'Administrator' : 'Tasty Member' }}
+                            </p>
                         </div>
                         <div class="w-10 h-10 bg-orange-500 rounded-xl flex items-center justify-center text-white font-bold shadow-lg shadow-orange-200">
                             {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
