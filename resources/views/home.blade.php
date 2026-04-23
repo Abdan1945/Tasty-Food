@@ -3,7 +3,7 @@
 @section('title', 'Healthy & Delicious')
 
 @section('content')
-    {{-- CSS CUSTOM UNTUK CAROUSEL NGEBUT & FIX FOTO KEPOTONG --}}
+    {{-- CSS CUSTOM UNTUK CAROUSEL & TOMBOL MELAYANG --}}
     <style>
         @keyframes scroll {
             0% { transform: translateX(0); }
@@ -13,14 +13,13 @@
         .carousel-track {
             display: flex;
             width: max-content;
-            /* KECEPATAN: 10 detik biar makin sat-set */
             animation: scroll 10s linear infinite;
-            padding-top: 100px; /* Ruang extra di atas biar lingkaran foto nggak kepotong */
+            padding-top: 100px; 
             padding-bottom: 50px;
         }
 
         .carousel-track:hover {
-            animation-play-state: paused; /* Berhenti kalau kursor di atasnya */
+            animation-play-state: paused;
         }
 
         .card-container {
@@ -30,12 +29,20 @@
             position: relative;
         }
 
-        /* Biar tinggi card sama semua walaupun teks beda panjang */
         .card-fixed-height {
             min-height: 280px;
             display: flex;
             flex-direction: column;
             justify-content: center;
+        }
+
+        /* Styling tambahan untuk Tombol Login agar lebih smooth */
+        .floating-login {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 9999;
+            transition: all 0.3s ease;
         }
     </style>
 
@@ -70,16 +77,14 @@
         </div>
     </section>
 
-    {{-- 3. INFINITE CAROUSEL SECTION (PERBAIKAN FOTO & SPEED) --}}
+    {{-- 3. INFINITE CAROUSEL SECTION --}}
     <section class="relative py-20 min-h-[650px] flex items-center overflow-hidden">
-        {{-- Background Banner --}}
         <div class="absolute inset-0 z-0">
             <img src="{{ asset('images/monika-grabkowska-P1aohbiT-EY-unsplash.jpg') }}" 
                  class="absolute inset-0 w-full h-full object-cover" alt="Banner">
-            <div class="absolute inset-0 bg-black/10"></div> {{-- Sedikit overlay biar card lebih pop-up --}}
+            <div class="absolute inset-0 bg-black/10"></div>
         </div>
         
-        {{-- Carousel Wrapper --}}
         <div class="relative z-10 w-full overflow-hidden">
             <div class="carousel-track">
                 @php 
@@ -89,15 +94,12 @@
                         ['title' => 'Ramen Udang', 'img' => 'images/img-3.png', 'desc' => 'Jujur, perpaduan udang sama kuah ramennya nagih banget. Fix, ini favorit baru!'], 
                         ['title' => 'Charcuterie Board', 'img' => 'images/img-4.png', 'desc' => 'Berasa lagi piknik di Eropa kalau piringnya begini. Cakep dilihat dan enak dimakan.']
                     ]; 
-                    // Kita gabung 3 kali biar transisi loopingnya nggak kelihatan patah
                     $infiniteCards = array_merge($cards, $cards, $cards);
                 @endphp
 
                 @foreach($infiniteCards as $card)
                     <div class="card-container">
                         <div class="bg-white p-8 pt-20 rounded-[40px] shadow-2xl text-center relative mt-16 group hover:-translate-y-3 transition-all duration-300 card-fixed-height border border-gray-100">
-                            
-                            {{-- Foto Melayang - Z-index ditinggiin supaya nggak ketutup --}}
                             <div class="absolute -top-16 left-1/2 -translate-x-1/2 w-32 h-32 border-[8px] border-white rounded-full overflow-hidden shadow-xl bg-white z-20">
                                 <img src="{{ asset($card['img']) }}" class="w-full h-full object-cover">
                             </div>
@@ -178,4 +180,27 @@
             </a>
         </div>
     </section>
+
+    {{-- TOMBOL LOGIN MELAYANG (HANYA MUNCUL JIKA BELUM LOGIN) --}}
+    @guest
+    <div class="floating-login">
+        <a href="{{ route('login') }}" 
+           class="flex items-center gap-3 bg-black text-white px-6 py-4 rounded-full shadow-[0_20px_50px_rgba(0,0,0,0.4)] hover:bg-orange-500 hover:-translate-y-2 transition-all duration-300 group border-2 border-white/20">
+            
+            <div class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center group-hover:bg-white/40 transition-colors">
+                <i class="bi bi-person-fill text-lg"></i>
+            </div>
+            
+            <div class="flex flex-col items-start leading-none">
+                <span class="text-[9px] uppercase tracking-[0.2em] opacity-60 mb-1 font-bold">Akses Admin</span>
+                <span class="text-sm font-black uppercase tracking-tight">Login Disini</span>
+            </div>
+
+            <i class="bi bi-arrow-right-short text-2xl group-hover:translate-x-1 transition-transform"></i>
+        </a>
+    </div>
+    @endguest
+
+    {{-- Bootstrap Icons --}}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 @endsection

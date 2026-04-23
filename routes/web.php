@@ -21,10 +21,9 @@ Route::get('/home', function () { return view('home'); })->name('home');
 Route::get('/tentang', function () { return view('tentang'); });
 Route::get('/berita', function () { return view('berita'); });
 
-// PERBAIKAN DI SINI: Mengambil data Gallery langsung untuk halaman publik
 Route::get('/galeri', function () { 
-    $galeries = Gallery::latest()->get(); // Ambil data foto terbaru
-    return view('galeri', compact('galeries')); // Kirim ke galeri.blade.php
+    $galeries = Gallery::latest()->get(); 
+    return view('galeri', compact('galeries')); 
 });
 
 Route::get('/kontak', function () { return view('kontak'); });
@@ -52,7 +51,7 @@ Route::middleware(['auth'])->group(function () {
         return view('dashboard', compact('totalUser', 'totalBerita', 'totalFoto'));
     })->name('dashboard');
 
-    // KELOLA BERITA (Resource)
+    // KELOLA BERITA
     Route::resource('dashboard/berita', BeritaController::class)->names([
         'index'   => 'berita.index',
         'create'  => 'berita.create',
@@ -63,7 +62,7 @@ Route::middleware(['auth'])->group(function () {
         'destroy' => 'berita.destroy',
     ]);
 
-    // KELOLA GALERI (Resource - Menggunakan GaleriController untuk CRUD Admin)
+    // KELOLA GALERI
     Route::resource('dashboard/galeri', GaleriController::class)->names([
         'index'   => 'galeri.index',
         'create'  => 'galeri.create',
@@ -74,10 +73,24 @@ Route::middleware(['auth'])->group(function () {
         'destroy' => 'galeri.destroy',
     ]);
 
-    // KELOLA USER
+    // KELOLA USER (DENGAN AKSI DELETE & BLOCK)
     Route::get('/dashboard/users', function () {
         $users = User::all();
         return view('admin.users', compact('users'));
     })->name('admin.users');
+
+    // Route untuk Delete User
+    Route::delete('/dashboard/users/{id}', function ($id) {
+        User::findOrFail($id)->delete();
+        return back()->with('success', 'User berhasil dihapus');
+    })->name('admin.users.destroy');
+
+    // Route untuk Block User
+    Route::patch('/dashboard/users/{id}/block', function ($id) {
+        $user = User::findOrFail($id);
+        $user->is_blocked = !$user->is_blocked; // Membalikkan status (0 jadi 1, atau sebaliknya)
+        $user->save();
+        return back()->with('success', 'Status user berhasil diperbarui');
+    })->name('admin.users.block');
     
 });
