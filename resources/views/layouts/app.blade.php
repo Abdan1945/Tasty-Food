@@ -98,20 +98,30 @@
             {{-- 3. PROFILE AREA (DI KANAN POJOK) --}}
             <div class="flex items-center border-l {{ $isDarkPage ? 'border-white/20' : 'border-black/10' }} pl-8 ml-4">
                 @auth
-                    <div class="flex items-center gap-3">
-                        <div class="flex flex-col items-end leading-tight">
-                            <span class="text-[10px] font-black {{ $isDarkPage ? 'text-white' : 'text-black' }} uppercase tracking-tighter">
-                                {{ Auth::user()->name }}
-                            </span>
-                            <form action="{{ route('logout') }}" method="POST" class="m-0 p-0 leading-none">
-                                @csrf
-                                <button type="submit" class="text-[9px] font-bold text-red-500 uppercase hover:underline">Logout</button>
-                            </form>
-                        </div>
-                        <a href="{{ url('/dashboard') }}" 
-                           class="w-10 h-10 {{ $isDarkPage ? 'bg-white text-black' : 'bg-black text-white' }} rounded-full flex items-center justify-center text-[11px] font-black hover:bg-orange-500 hover:text-white transition-all shadow-lg border-2 {{ $isDarkPage ? 'border-white' : 'border-black' }}">
-                            {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
+                    <div class="flex items-center gap-6">
+                        {{-- Tombol Dashboard Baru --}}
+                        <a href="{{ url('/dashboard') }}" class="text-[10px] font-black {{ $isDarkPage ? 'text-white' : 'text-black' }} uppercase tracking-widest border border-current px-4 py-2 rounded-full hover:bg-orange-500 hover:border-orange-500 hover:text-white transition-all">
+                            Dashboard
                         </a>
+
+                        <div class="flex items-center gap-3">
+                            <div class="flex flex-col items-end leading-tight">
+                                <span class="text-[10px] font-black {{ $isDarkPage ? 'text-white' : 'text-black' }} uppercase tracking-tighter">
+                                    {{ Auth::user()->name }}
+                                </span>
+                                {{-- Tombol Logout yang lebih rapi --}}
+                                <form action="{{ route('logout') }}" method="POST" class="m-0 p-0 leading-none mt-1">
+                                    @csrf
+                                    <button type="submit" class="text-[9px] font-bold text-red-500 uppercase hover:text-red-700 transition-colors">
+                                        <i class="bi bi-power"></i> Logout
+                                    </button>
+                                </form>
+                            </div>
+                            {{-- Avatar Lingkaran --}}
+                            <div class="w-10 h-10 {{ $isDarkPage ? 'bg-white text-black' : 'bg-black text-white' }} rounded-full flex items-center justify-center text-[11px] font-black shadow-lg border-2 {{ $isDarkPage ? 'border-white' : 'border-black' }}">
+                                {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
+                            </div>
+                        </div>
                     </div>
                 @endauth
 

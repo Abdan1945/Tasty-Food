@@ -9,35 +9,46 @@ use Illuminate\Support\Facades\Storage;
 class BeritaController extends Controller
 {
     /**
-     * Menampilkan daftar berita (index.blade.php)
+     * UNTUK HALAMAN DEPAN (berita.blade.php)
+     * Menampilkan semua berita ke pengunjung website.
+     */
+    public function indexFront()
+    {
+        $berita = News::latest()->get(); 
+        return view('berita', compact('berita'));
+    }
+
+    /**
+     * UNTUK HALAMAN DASHBOARD ADMIN
+     * Menampilkan tabel daftar berita untuk dikelola admin.
      */
     public function index()
     {
-        // Mengambil berita terbaru agar yang baru di-upload muncul paling atas
         $news = News::latest()->get(); 
         return view('admin.berita.index', compact('news'));
     }
 
     /**
-     * Menampilkan form tambah (create.blade.php)
+     * FORM TAMBAH BERITA
      */
-    public function create()
-    {
-        return view('admin.berita.create');
+    public function create() 
+    { 
+        return view('admin.berita.create'); 
     }
 
     /**
-     * Menyimpan data dari form ke database
+     * PROSES SIMPAN BERITA BARU
      */
     public function store(Request $request)
     {
         $request->validate([
             'title' => 'required|max:255',
             'content' => 'required',
-            'image' => 'required|image|mimes:jpeg,png,jpg|max:2048', // Max 2MB
+            // Batas upload ditingkatkan menjadi 5MB sesuai request lu sebelumnya
+            'image' => 'required|image|mimes:jpeg,png,jpg|max:5120',
         ]);
 
-        // Simpan file gambar ke folder 'storage/app/public/berita'
+        // Simpan gambar ke storage/app/public/berita
         $imagePath = $request->file('image')->store('berita', 'public');
 
         News::create([
@@ -46,11 +57,12 @@ class BeritaController extends Controller
             'image'   => $imagePath,
         ]);
 
-        return redirect()->route('berita.index')->with('success', 'Berita kuliner berhasil diterbitkan!');
+        return redirect()->route('berita.index')->with('success', 'Berita berhasil diterbitkan!');
     }
 
     /**
-     * Menampilkan detail satu berita (show.blade.php)
+     * MENAMPILKAN DETAIL BERITA (Fix Error show())
+     * Ini fungsi yang lu butuhkan supaya error "undefined method show" hilang.
      */
     public function show($id)
     {
@@ -59,7 +71,7 @@ class BeritaController extends Controller
     }
 
     /**
-     * Menampilkan form edit (edit.blade.php)
+     * FORM EDIT BERITA
      */
     public function edit($id)
     {
@@ -68,50 +80,48 @@ class BeritaController extends Controller
     }
 
     /**
-     * Update data di database
+     * PROSES UPDATE DATA BERITA
      */
     public function update(Request $request, $id)
     {
         $news = News::findOrFail($id);
         
         $request->validate([
-            'title'   => 'required|max:255',
+            'title' => 'required|max:255',
             'content' => 'required',
-            'image'   => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:5120',
         ]);
 
-        // Ambil semua data input kecuali gambar dulu
-        $data = $request->only(['title', 'content']);
-
+        // Jika ada upload gambar baru, hapus gambar lama dan simpan yang baru
         if ($request->hasFile('image')) {
-            // Hapus gambar lama dari storage jika user upload gambar baru
             if ($news->image) {
                 Storage::disk('public')->delete($news->image);
             }
-            
-            // Simpan gambar baru
-            $data['image'] = $request->file('image')->store('berita', 'public');
+            $news->image = $request->file('image')->store('berita', 'public');
         }
 
-        $news->update($data);
+        $news->update([
+            'title' => $request->title,
+            'content' => $request->content,
+            'image' => $news->image, // Tetap gunakan path gambar (lama atau baru)
+        ]);
 
-        return redirect()->route('berita.index')->with('success', 'Berita berhasil diperbarui!');
+        return redirect()->route('berita.index')->with('success', 'Berita berhasil diupdate!');
     }
 
     /**
-     * Menghapus berita dan gambarnya
+     * PROSES HAPUS BERITA
      */
     public function destroy($id)
     {
-        $news = News::findOrFail($id);
-
-        // Hapus file gambar dari folder storage agar tidak nyampah
-        if ($news->image) {
-            Storage::disk('public')->delete($news->image);
+        $berita = News::findOrFail($id);
+        
+        // Hapus file gambar dari folder storage agar tidak menumpuk
+        if ($berita->image) {
+            Storage::disk('public')->delete($berita->image);
         }
-
-        $news->delete();
-
-        return redirect()->route('berita.index')->with('success', 'Berita telah berhasil dihapus!');
+        
+        $berita->delete();
+        return redirect()->route('berita.index')->with('success', 'Berita berhasil dihapus!');
     }
 }
