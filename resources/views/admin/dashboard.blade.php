@@ -5,16 +5,13 @@
 @section('content')
     @if(auth()->user()->role == 'admin')
         <div class="space-y-6">
-            {{-- 1. Barisan Statistik Utama (Paling Atas) --}}
+            {{-- 1. Barisan Statistik Utama --}}
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {{-- Card Total Berita --}}
                 <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
                     <div class="flex justify-between items-start">
                         <div class="w-10 h-10 bg-[#e7e7ff] rounded-lg flex items-center justify-center">
                             <i class="bi bi-newspaper text-[#696cff] text-xl"></i>
-                        </div>
-                        <div class="dropdown">
-                            <button class="text-gray-300 hover:text-gray-500"><i class="bi bi-three-dots-vertical"></i></button>
                         </div>
                     </div>
                     <p class="text-gray-500 text-xs font-bold uppercase tracking-wider mt-4">Total Berita</p>
@@ -61,31 +58,34 @@
                     <a href="{{ route('berita.create') }}" class="flex items-center gap-2 px-4 py-2 bg-[#696cff] text-white rounded-lg text-xs font-bold shadow-sm hover:bg-[#5f61e6] transition-all">
                         <i class="bi bi-plus-lg"></i> Tambah Berita
                     </a>
-                    <a href="{{ route('galeri.create') }}" class="flex items-center gap-2 px-4 py-2 border border-gray-200 text-gray-600 rounded-lg text-xs font-bold hover:bg-gray-50 transition-all">
+                    <a href="{{ route('admin.gallery.create') }}" class="flex items-center gap-2 px-4 py-2 border border-gray-200 text-gray-600 rounded-lg text-xs font-bold hover:bg-gray-50 transition-all">
                         <i class="bi bi-upload"></i> Upload Galeri
                     </a>
                 </div>
             </div>
 
-            {{-- 3. Riwayat Aktivitas (Bawah) --}}
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 pb-10">
-                {{-- Recent Stories --}}
+            {{-- 3. Bagian Konten Utama (Berurutan ke bawah) --}}
+            <div class="flex flex-col gap-6 pb-10">
+                
+                {{-- Recent Stories (Lurus ke bawah, 1 kolom) --}}
                 <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
                     <div class="flex justify-between items-center mb-6">
-                        <h5 class="text-sm font-black text-gray-700 uppercase tracking-widest">Recent Stories</h5>
+                        <h5 class="text-sm font-black text-gray-700 uppercase tracking-widest">Berita Terkini</h5>
                         <a href="{{ route('berita.index') }}" class="text-[#696cff] text-[10px] font-bold uppercase hover:underline">View All</a>
                     </div>
-                    <div class="space-y-4">
+                    
+                    {{-- Container list berita lurus ke bawah --}}
+                    <div class="flex flex-col gap-2">
                         @forelse($recentNews as $item)
-                            <div class="flex items-center gap-4 p-2 hover:bg-gray-50 rounded-xl transition-all">
-                                <img src="{{ asset('storage/' . $item->image) }}" class="w-12 h-12 rounded-lg object-cover shadow-sm">
+                            <div class="flex items-center gap-4 p-3 hover:bg-gray-50 rounded-xl transition-all border-b border-gray-50 last:border-0">
+                                <img src="{{ asset('storage/' . $item->image) }}" class="w-14 h-14 rounded-lg object-cover shadow-sm">
                                 <div class="flex-1">
                                     <h6 class="text-sm font-bold text-gray-700 line-clamp-1 uppercase">{{ $item->title }}</h6>
                                     <p class="text-[10px] text-gray-400 font-medium">
                                         <i class="bi bi-clock"></i> {{ $item->created_at->diffForHumans() }}
                                     </p>
                                 </div>
-                                <a href="{{ route('berita.edit', $item->id) }}" class="w-8 h-8 flex items-center justify-center text-gray-400 hover:text-[#696cff] bg-white border border-gray-100 rounded-lg transition-all shadow-sm">
+                                <a href="{{ route('berita.edit', $item->id) }}" class="w-9 h-9 flex items-center justify-center text-gray-400 hover:text-[#696cff] bg-white border border-gray-100 rounded-lg transition-all shadow-sm">
                                     <i class="bi bi-pencil-square text-xs"></i>
                                 </a>
                             </div>
@@ -95,20 +95,22 @@
                     </div>
                 </div>
 
-                {{-- Gallery Update --}}
+                {{-- Gallery Update (Pindah ke bawah Recent Stories) --}}
                 <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
                     <div class="flex justify-between items-center mb-6">
-                        <h5 class="text-sm font-black text-gray-700 uppercase tracking-widest">Gallery Update</h5>
-                        <a href="{{ route('galeri.index') }}" class="text-[#696cff] text-[10px] font-bold uppercase hover:underline">Manage</a>
+                        <h5 class="text-sm font-black text-gray-700 uppercase tracking-widest">Pembaruan Galeri</h5>
+                        <a href="{{ route('admin.gallery.index') }}" class="text-[#696cff] text-[10px] font-bold uppercase hover:underline">Manage</a>
                     </div>
-                    <div class="grid grid-cols-4 gap-3">
+                    {{-- Tampilan Grid Galeri --}}
+                    <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3">
                         @forelse($recentGalleries as $galeri)
                             <div class="aspect-square rounded-lg overflow-hidden border border-gray-50 shadow-sm group relative">
-                                <img src="{{ asset('storage/' . $galeri->image) }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                                <img src="{{ asset('images/gallery/' . $galeri->image) }}" 
+                                     class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                                 <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                             </div>
                         @empty
-                            <div class="col-span-4 py-10 text-center border-2 border-dashed border-gray-100 rounded-xl">
+                            <div class="col-span-full py-10 text-center border-2 border-dashed border-gray-100 rounded-xl">
                                 <p class="text-xs text-gray-400 italic">Galeri masih kosong.</p>
                             </div>
                         @endforelse
@@ -118,10 +120,11 @@
                         <span class="text-xs font-black text-gray-700">{{ $totalFoto }} Files</span>
                     </div>
                 </div>
+
             </div>
         </div>
     @else
-        {{-- Member View Tetap Sama --}}
+        {{-- Member View --}}
         <div class="bg-white rounded-2xl p-10 border border-gray-100 shadow-sm flex items-center justify-between overflow-hidden">
             <div class="z-10">
                 <h2 class="text-4xl font-black text-gray-800 tracking-tighter uppercase">Welcome, <br><span class="text-[#696cff]">{{ Auth::user()->name }}</span></h2>

@@ -4,10 +4,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BeritaController;
 use App\Http\Controllers\Admin\GaleriController; 
+use App\Http\Controllers\GoogleController;
 use App\Models\User;
 use App\Models\News;
 use App\Models\Gallery;
-use App\Http\Controllers\GoogleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,10 +21,9 @@ Route::get('/home', function () { return view('home'); })->name('home');
 Route::get('/tentang', function () { return view('tentang'); });
 Route::get('/kontak', function () { return view('kontak'); });
 
-// --- PERBAIKAN: Route Berita & Galeri Depan (Tembak ke Controller) ---
-// Biar data yang diinput Admin muncul di sini
+// --- Route Berita & Galeri Halaman Depan ---
 Route::get('/berita', [BeritaController::class, 'indexFront'])->name('berita.front');
-Route::get('/galeri', [GaleriController::class, 'indexFront'])->name('galeri.front');
+Route::get('/galeri', [GaleriController::class, 'publicIndex'])->name('galeri.public');
 
 
 // --- AUTH ROUTES ---
@@ -44,16 +43,15 @@ Route::middleware(['auth'])->group(function () {
     
     // DASHBOARD ADMIN
     Route::get('/dashboard', function () {
-        // Ambil jumlah data untuk statistik di dashboard
         $totalUser   = User::count(); 
         $totalBerita = News::count(); 
         $totalFoto   = Gallery::count(); 
 
-        // Data terbaru untuk tabel/list di dashboard
         $recentNews = News::latest()->take(5)->get();
         $recentGalleries = Gallery::latest()->take(8)->get();
 
-        return view('dashboard', compact(
+        // PEMBETULAN DISINI: diarahkan ke folder admin
+        return view('admin.dashboard', compact(
             'totalUser', 
             'totalBerita', 
             'totalFoto', 
@@ -73,16 +71,20 @@ Route::middleware(['auth'])->group(function () {
         'destroy' => 'berita.destroy',
     ]);
 
-    // CRUD KELOLA GALERI
+    // CRUD KELOLA GALERI (Disesuaikan dengan Naming admin.gallery)
     Route::resource('dashboard/galeri', GaleriController::class)->names([
-        'index'   => 'galeri.index',
-        'create'  => 'galeri.create',
-        'store'   => 'galeri.store',
-        'show'    => 'galeri.show',
-        'edit'    => 'galeri.edit',
-        'update'  => 'galeri.update',
-        'destroy' => 'galeri.destroy',
+        'index'   => 'admin.gallery.index',
+        'create'  => 'admin.gallery.create',
+        'store'   => 'admin.gallery.store',
+        'show'    => 'admin.gallery.show',
+        'edit'    => 'admin.gallery.edit',
+        'update'  => 'admin.gallery.update',
+        'destroy' => 'admin.gallery.destroy',
     ]);
+
+    // Tambahan: Route buat isi database otomatis di galeri
+    Route::post('/dashboard/galeri/init', [GaleriController::class, 'initStatic'])->name('admin.gallery.init');
+
 
     // KELOLA USER
     Route::get('/dashboard/users', function () {

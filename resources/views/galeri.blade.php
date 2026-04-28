@@ -16,14 +16,14 @@
     <div class="max-w-7xl mx-auto px-6">
 
         {{-- ========================================== --}}
-        {{-- Swiper Slider (KODE ASLI LU - TETAP ADA) --}}
+        {{-- Swiper Slider --}}
         {{-- ========================================== --}}
         @php
             $sliderImages = [
                 'ella-olsson-mmnKI8kMxpc-unsplash.jpg',
-                'brooke-lark-1Rm9GLHV0UA-unsplash.jpg',
-                'brooke-lark-nBtmglfY0HU-unsplash.jpg',
-                'brooke-lark-oaz0raysASk-unsplash.jpg',
+                'anh-nguyen-kcA-c3f_3FE-unsplash.jpg',
+                'anna-pelzer-IGfIGP5ONV0-unsplash.jpg',
+                'jonathan-borba-Gkc_xM3VY34-unsplash.jpg',
             ];
         @endphp
 
@@ -45,7 +45,7 @@
 
 
         {{-- ============================================== --}}
-        {{-- BAGIAN BARU: DATA YANG DIBUAT OLEH ADMIN --}}
+        {{-- BAGIAN: DATA DARI DATABASE (ADMIN) --}}
         {{-- ============================================== --}}
         <div class="mt-20">
             <h3 class="text-2xl font-black uppercase mb-12 text-slate-900 border-l-8 border-amber-500 pl-4">
@@ -53,34 +53,35 @@
             </h3>
 
             <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
-                @forelse($galeries as $item)
+                @forelse($galleries as $item)
                     <div class="group">
                         <div class="aspect-square rounded-[40px] overflow-hidden shadow-lg bg-white relative border-4 border-white transition-all duration-300 hover:shadow-2xl">
-                            {{-- Memanggil foto hasil upload admin --}}
-                            <img src="{{ asset('storage/galeri/' . $item->foto) }}"
-                                 class="w-full h-full object-cover group-hover:scale-110 transition duration-500"
-                                 alt="{{ $item->judul }}">
                             
-                            {{-- Overlay Judul saat di-hover --}}
+                            {{-- Path folder dan Nama Kolom --}}
+                            <img src="{{ asset('images/gallery/' . $item->image) }}"
+                                 class="w-full h-full object-cover group-hover:scale-110 transition duration-500"
+                                 alt="{{ $item->title }}">
+                            
+                            {{-- Overlay Judul --}}
                             <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center p-6 text-center">
-                                <span class="text-white font-bold uppercase text-sm tracking-widest">{{ $item->judul }}</span>
+                                <span class="text-white font-bold uppercase text-sm tracking-widest">
+                                    {{ $item->title }}
+                                </span>
                             </div>
                         </div>
+                        {{-- BAGIAN KATEGORI DI BAWAH FOTO SUDAH DIHAPUS --}}
                     </div>
                 @empty
-                    {{-- Tampilan kalau admin belum upload apa-apa --}}
                     <div class="col-span-full text-center py-10">
-                        <p class="text-gray-400 italic">Belum ada foto tambahan yang diunggah admin.</p>
+                        <p class="text-gray-400 italic">Belum ada koleksi foto kuliner.</p>
                     </div>
                 @endforelse
             </div>
         </div>
-        {{-- ============================================== --}}
-
     </div>
 </main>
 
-{{-- CSS & JS SWIPER LU (TETAP SAMA) --}}
+{{-- Swiper CSS --}}
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 <style>
     .mySwiper { width: 100%; padding: 40px 0; }
@@ -108,6 +109,7 @@
     .swiper-button-next { right: 10px; }
 </style>
 
+{{-- Swiper JS --}}
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {

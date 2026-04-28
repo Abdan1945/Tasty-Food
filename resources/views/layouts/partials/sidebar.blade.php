@@ -39,7 +39,7 @@
                 <span class="text-sm">Kelola Berita</span>
             </a>
 
-            <a href="{{ route('galeri.index') }}" 
+            <a href="{{ route('admin.gallery.index') }}" 
                class="group flex items-center gap-3 px-4 py-2.5 rounded-lg transition-all duration-200 {{ Request::is('dashboard/galeri*') ? 'bg-[#e7e7ff] text-[#696cff] font-semibold' : 'hover:bg-gray-50 text-gray-500' }}">
                 <div class="w-5 h-5 flex items-center justify-center">
                     <i class="bi bi-images {{ Request::is('dashboard/galeri*') ? 'text-[#696cff]' : 'text-gray-400 group-hover:text-[#696cff]' }}"></i>
