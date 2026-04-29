@@ -54,6 +54,15 @@
                 </div>
                 <span class="text-sm">Kelola User</span>
             </a>
+
+            {{-- MENU BARU: Pesan Masuk (Kontak) --}}
+            <a href="{{ route('admin.kontak.index') }}" 
+               class="group flex items-center gap-3 px-4 py-2.5 rounded-lg transition-all duration-200 {{ Request::is('dashboard/kontak*') ? 'bg-[#e7e7ff] text-[#696cff] font-semibold' : 'hover:bg-gray-50 text-gray-500' }}">
+                <div class="w-5 h-5 flex items-center justify-center">
+                    <i class="bi bi-chat-left-text-fill {{ Request::is('dashboard/kontak*') ? 'text-[#696cff]' : 'text-gray-400 group-hover:text-[#696cff]' }}"></i>
+                </div>
+                <span class="text-sm">Pesan Masuk</span>
+            </a>
         @endif
     </nav>
 

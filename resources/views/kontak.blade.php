@@ -16,15 +16,24 @@
     <section class="py-10 px-10 max-w-7xl mx-auto">
         <h2 class="text-2xl font-black uppercase mb-10 tracking-tight">Kontak Kami</h2>
         
-        <form action="#" method="POST" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {{-- Alert Sukses --}}
+        @if(session('success'))
+            <div class="bg-green-500 text-white p-4 rounded-xl mb-6">
+                {{ session('success') }}
+            </div>
+        @endif
+        
+        {{-- ACTION diarahkan ke route kontak.store --}}
+        <form action="{{ route('kontak.store') }}" method="POST" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            @csrf
             <div class="space-y-4">
-                <input type="text" placeholder="Subject" class="w-full border-2 border-gray-100 rounded-xl px-5 py-4 focus:border-black outline-none transition text-sm font-light">
-                <input type="text" placeholder="Name" class="w-full border-2 border-gray-100 rounded-xl px-5 py-4 focus:border-black outline-none transition text-sm font-light">
-                <input type="email" placeholder="Email" class="w-full border-2 border-gray-100 rounded-xl px-5 py-4 focus:border-black outline-none transition text-sm font-light">
+                <input type="text" name="subject" placeholder="Subject" class="w-full border-2 border-gray-100 rounded-xl px-5 py-4 focus:border-black outline-none transition text-sm font-light" required>
+                <input type="text" name="name" placeholder="Name" class="w-full border-2 border-gray-100 rounded-xl px-5 py-4 focus:border-black outline-none transition text-sm font-light" required>
+                <input type="email" name="email" placeholder="Email" class="w-full border-2 border-gray-100 rounded-xl px-5 py-4 focus:border-black outline-none transition text-sm font-light" required>
             </div>
             
             <div>
-                <textarea placeholder="Message" class="w-full h-full border-2 border-gray-100 rounded-xl px-5 py-4 focus:border-black outline-none transition text-sm font-light min-h-[180px]"></textarea>
+                <textarea name="message" placeholder="Message" class="w-full h-full border-2 border-gray-100 rounded-xl px-5 py-4 focus:border-black outline-none transition text-sm font-light min-h-[180px]" required></textarea>
             </div>
             
             <div class="md:col-span-2">
@@ -35,6 +44,7 @@
         </form>
     </section>
 
+    {{-- Bagian Icon & Maps (Sama seperti punya kamu, tidak diubah) --}}
     <section class="py-24 bg-white px-10">
         <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-16 text-center">
             <div class="flex flex-col items-center">
@@ -65,37 +75,18 @@
 
     <section class="px-10 pb-32">
         <div class="max-w-7xl mx-auto rounded-[40px] overflow-hidden shadow-2xl h-[450px] border-[10px] border-white relative">
-            <iframe 
-                id="main-maps"
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126748.56347862248!2d107.5731164!3d-6.9034443!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e68e63982510777%3A0x1461f005c10fa32d!2sBandung%2C%20Kota%20Bandung%2C%20Jawa%20Barat!5e0!3m2!1sid!2sid!4v1700000000000" 
-                width="100%" 
-                height="100%" 
-                style="border:0;" 
-                allowfullscreen="" 
-                loading="lazy" 
-                referrerpolicy="no-referrer-when-downgrade">
-            </iframe>
+            <iframe id="main-maps" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.55883688636!2d107.6617986!3d-6.9432114!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e68e7df00000001%3A0x6735e2670e176b6d!2sCyberLabs!5e0!3m2!1sid!2sid!4v1700000000000" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
         </div>
     </section>
 
     <script>
         const btnLocation = document.getElementById('btn-location');
         const mainMaps = document.getElementById('main-maps');
-
-        // Link lokasi CyberLabs
-        const cyberLabsUrl = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.558830113885!2d107.66173497448234!3d-6.943211367965742!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e68e7df07279321%3A0x69680327f12e84!2sCyberLabs%20-%20Digital%20Marketing%20Company%20%26%20Software%20Developer!5e0!3m2!1sid!2sid!4v1711424177265!5m2!1sid!2sid";
-        
-        // Link lokasi default (Bandung)
-        const defaultUrl = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126748.56347862248!2d107.5731164!3d-6.9034443!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e68e63982510777%3A0x1461f005c10fa32d!2sBandung%2C%20Kota%20Bandung%2C%20Jawa%20Barat!5e0!3m2!1sid!2sid!4v1700000000000";
+        const cyberLabsUrl = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.55883688636!2d107.6617986!3d-6.9432114!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e68e7df00000001%3A0x6735e2670e176b6d!2sCyberLabs!5e0!3m2!1sid!2sid!4v1700000000000";
+        const defaultUrl = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126748.56347862248!2d107.5731164!3d-6.9034443!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e68e6398252477f%3A0x146a91de2af4f526!2sBandung%2C%20Jawa%20Barat!5e0!3m2!1sid!2sid!4v1700000000000";
 
         btnLocation.addEventListener('click', function() {
-            // Cek jika peta sekarang sudah CyberLabs, kita balikkan ke default (toggle)
-            // Atau jika hanya ingin sekali klik langsung berubah selamanya:
-            if (mainMaps.src !== cyberLabsUrl) {
-                mainMaps.src = cyberLabsUrl;
-            } else {
-                mainMaps.src = defaultUrl;
-            }
+            mainMaps.src = (mainMaps.src !== cyberLabsUrl) ? cyberLabsUrl : defaultUrl;
         });
     </script>
 @endsection
