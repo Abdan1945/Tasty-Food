@@ -3,8 +3,8 @@
 @section('title', 'Healthy & Delicious')
 
 @section('content')
-    {{-- CSS CUSTOM UNTUK CAROUSEL & TOMBOL MELAYANG --}}
     <style>
+        /* --- Desktop Settings --- */
         @keyframes scroll {
             0% { transform: translateX(0); }
             100% { transform: translateX(calc(-320px * 4)); } 
@@ -13,9 +13,9 @@
         .carousel-track {
             display: flex;
             width: max-content;
-            animation: scroll 10s linear infinite;
-            padding-top: 100px; 
-            padding-bottom: 50px;
+            animation: scroll 20s linear infinite;
+            padding-top: 80px; 
+            padding-bottom: 80px;
         }
 
         .carousel-track:hover {
@@ -24,90 +24,96 @@
 
         .card-container {
             width: 300px; 
-            margin-right: 20px; 
+            margin-right: 30px; 
             flex-shrink: 0;
+        }
+
+        /* BACKGROUND CAROUSEL - DICERAHKAN */
+        .card-section-bg {
             position: relative;
+            background-image: url('{{ asset("images/monika-grabkowska-P1aohbiT-EY-unsplash.jpg") }}');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            padding: 100px 0;
         }
 
-        .card-fixed-height {
-            min-height: 280px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
+        /* Overlay Hitam ditipisin dari 0.7 ke 0.4 biar lebih cerah */
+        .card-section-bg::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.4); 
+            z-index: 1;
         }
 
-        /* Styling tambahan untuk Tombol Login agar lebih smooth */
-        .floating-login {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            z-index: 9999;
-            transition: all 0.3s ease;
+        .relative-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* --- MOBILE ADJUSTMENTS (< 768px) --- */
+        @media (max-width: 767px) {
+            header { text-align: center; padding-top: 40px !important; }
+            header h1 { font-size: 3rem !important; }
+            header h2 { font-size: 3.5rem !important; }
+            .hero-image-container { order: -1; margin-bottom: 30px; }
+            .hero-image-container img { max-width: 250px !important; border-width: 8px !important; }
+            .carousel-track { animation-duration: 12s; }
+            .grid-news { grid-template-columns: 1fr !important; }
         }
     </style>
 
     {{-- 1. HERO SECTION --}}
-    <header class="relative flex flex-col md:flex-row items-center px-10 py-12 max-w-7xl mx-auto min-h-[600px]">
+    <header class="relative flex flex-col md:flex-row items-center px-10 py-12 max-w-7xl mx-auto min-h-[600px] bg-white">
         <div class="md:w-1/2 z-10">
-            <div class="w-16 h-1 bg-black mb-6"></div>
+            <div class="w-16 h-1 bg-black mb-6 hidden md:block"></div>
             <h1 class="text-5xl md:text-7xl font-light text-gray-400 leading-none uppercase">Healthy</h1>
             <h2 class="text-6xl md:text-8xl font-black text-black uppercase leading-[0.8] mb-8 tracking-tighter">Tasty Food</h2>
-            <p class="text-gray-500 text-sm leading-relaxed max-w-md mb-8">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ornare, augue eu rutrum commodo, dui diam convallis arcu, eget consectetur ex sem.
+            <p class="text-gray-500 text-sm leading-relaxed max-w-md mb-8 mx-auto md:ml-0">
+                Sajian kuliner nusantara yang diracik dengan bahan organik pilihan untuk menjaga kesehatan.
             </p>
-            <a href="{{ url('/tentang') }}" class="inline-block bg-black text-white px-10 py-4 text-xs font-bold uppercase tracking-widest hover:bg-gray-800 transition shadow-xl text-center">
+            <a href="{{ url('/tentang') }}" class="inline-block bg-black text-white px-10 py-4 text-xs font-bold uppercase tracking-widest hover:bg-gray-800 transition shadow-xl">
                 Tentang Kami
             </a>
         </div>
         
-        <div class="md:w-1/2 relative mt-16 md:mt-0 flex justify-center">
+        <div class="md:w-1/2 relative mt-16 md:mt-0 flex justify-center hero-image-container">
             <img src="{{ asset('images/img-4-2000x2000.png') }}"
                  class="w-full max-w-[500px] aspect-square object-cover rounded-full shadow-2xl border-[15px] border-white">
         </div>
     </header>
 
-    {{-- 2. TENTANG KAMI SECTION --}}
-    <section class="py-24 px-10 text-center max-w-4xl mx-auto">
+    {{-- 2. TENTANG KAMI --}}
+    <section class="py-24 px-10 text-center max-w-4xl mx-auto bg-white">
         <h3 class="text-3xl font-extrabold uppercase tracking-widest mb-8 text-slate-800">Tentang Kami</h3>
         <p class="text-gray-600 leading-loose text-lg italic px-4">
-            "Indonesia memiliki keberagaman kuliner yang tak terhitung jumlahnya. Kami hadir untuk menyajikan hidangan nusantara dengan sentuhan modern dan bahan-bahan organik berkualitas."
+            "Kami hadir untuk menyajikan hidangan nusantara dengan sentuhan modern dan bahan-bahan organik berkualitas."
         </p>
-        <div class="mt-8 flex justify-center">
-            <div class="w-12 h-1 bg-black"></div>
-        </div>
     </section>
 
-    {{-- 3. INFINITE CAROUSEL SECTION --}}
-    <section class="relative py-20 min-h-[650px] flex items-center overflow-hidden">
-        <div class="absolute inset-0 z-0">
-            <img src="{{ asset('images/monika-grabkowska-P1aohbiT-EY-unsplash.jpg') }}" 
-                 class="absolute inset-0 w-full h-full object-cover" alt="Banner">
-            <div class="absolute inset-0 bg-black/10"></div>
-        </div>
-        
-        <div class="relative z-10 w-full overflow-hidden">
+    {{-- 3. SECTION CAROUSEL (HANYA AREA INI YANG ADA BACKGROUND FOTO) --}}
+    <section class="card-section-bg overflow-hidden">
+        <div class="relative-content">
             <div class="carousel-track">
                 @php 
                     $cards = [
-                        ['title' => 'Salad Bowl', 'img' => 'images/img-1.png', 'desc' => 'Keseimbangan dalam setiap suapan. Kadang yang kita butuhkan cuma semangkuk kebaikan alami.'],
-                        ['title' => 'Salmon', 'img' => 'images/img-2.png', 'desc' =>'Nutrisi lengkap dalam satu piring. Protein berkualitas dari salmon panggang terbaik.'],
-                        ['title' => 'Ramen Udang', 'img' => 'images/img-3.png', 'desc' => 'Jujur, perpaduan udang sama kuah ramennya nagih banget. Fix, ini favorit baru!'], 
-                        ['title' => 'Charcuterie Board', 'img' => 'images/img-4.png', 'desc' => 'Berasa lagi piknik di Eropa kalau piringnya begini. Cakep dilihat dan enak dimakan.']
+                        ['title' => 'Salad Bowl', 'img' => 'images/img-1.png', 'desc' => 'Keseimbangan dalam setiap suapan. Bahan alami pilihan.'],
+                        ['title' => 'Salmon', 'img' => 'images/img-2.png', 'desc' =>'Nutrisi lengkap protein berkualitas dari salmon panggang.'],
+                        ['title' => 'Ramen Udang', 'img' => 'images/img-3.png', 'desc' => 'Perpaduan udang dan kuah ramen yang nagih!'], 
+                        ['title' => 'Charcuterie', 'img' => 'images/img-4.png', 'desc' => 'Sajian estetik yang lezat dinikmati bersama.']
                     ]; 
                     $infiniteCards = array_merge($cards, $cards, $cards);
                 @endphp
 
                 @foreach($infiniteCards as $card)
                     <div class="card-container">
-                        <div class="bg-white p-8 pt-20 rounded-[40px] shadow-2xl text-center relative mt-16 group hover:-translate-y-3 transition-all duration-300 card-fixed-height border border-gray-100">
+                        <div class="bg-white p-8 pt-20 rounded-[40px] shadow-2xl text-center relative mt-16 group transition-all duration-300 border border-gray-100 min-h-[300px]">
                             <div class="absolute -top-16 left-1/2 -translate-x-1/2 w-32 h-32 border-[8px] border-white rounded-full overflow-hidden shadow-xl bg-white z-20">
                                 <img src="{{ asset($card['img']) }}" class="w-full h-full object-cover">
                             </div>
-
-                            <h4 class="font-black text-xl mb-4 tracking-tight uppercase text-slate-900">{{ $card['title'] }}</h4>
-                            <p class="text-gray-400 text-[12px] leading-relaxed">
-                                {{ $card['desc'] }}
-                            </p>
+                            <h4 class="font-black text-xl mb-4 uppercase text-slate-900 leading-tight">{{ $card['title'] }}</h4>
+                            <p class="text-gray-500 text-[12px] leading-relaxed">{{ $card['desc'] }}</p>
                         </div>
                     </div>
                 @endforeach
@@ -115,47 +121,42 @@
         </div>
     </section>
 
-    {{-- 4. BERITA KAMI SECTION --}}
-    <section class="py-24 max-w-7xl mx-auto px-10">
+    {{-- 4. BERITA KAMI --}}
+    <section class="py-24 max-w-7xl mx-auto px-10 bg-white">
         <h3 class="text-3xl font-extrabold uppercase tracking-widest text-center mb-16 text-slate-900">Berita Kami</h3>
         <div class="flex flex-col md:flex-row gap-8">
             <div class="md:w-1/2 relative group overflow-hidden rounded-[40px] shadow-2xl h-[550px]">
-                <img src="{{ asset('images/fathul-abrar-T-qI_MI2EMA-unsplash.jpg') }}" 
-                     class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
-                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent p-10 flex flex-col justify-end text-white">
-                    <h4 class="text-2xl font-extrabold leading-tight uppercase mb-4">Ulasan Kuliner Terbaik Pekan Ini</h4>
-                    <p class="text-sm text-gray-300 mb-6 line-clamp-2">
-                        Temukan rahasia dibalik hidangan lezat yang kami sajikan setiap harinya dengan bahan organik pilihan.
-                    </p>
-                    <a href="{{ url('/berita') }}" class="bg-yellow-400 text-black px-6 py-2 rounded-lg font-bold text-xs uppercase tracking-widest inline-block w-fit hover:bg-yellow-500 transition shadow-lg">
+                <img src="{{ asset('images/fathul-abrar-T-qI_MI2EMA-unsplash.jpg') }}" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/90 p-10 flex flex-col justify-end text-white">
+                    <h4 class="text-2xl font-black uppercase mb-4">Ulasan Kuliner Pekan Ini</h4>
+                    <a href="{{ url('/berita') }}" class="bg-yellow-400 text-black px-6 py-2 rounded-lg font-bold text-xs uppercase tracking-widest w-fit shadow-lg">
                         Baca Selengkapnya
                     </a>
                 </div>
             </div>
 
-            <div class="md:w-1/2 grid grid-cols-2 gap-6">
+            <div class="md:w-1/2 grid grid-cols-2 gap-6 grid-news">
                 @php 
                     $news = [
-                        ['title' => 'Resep Salad Buah', 'img' => 'images/sanket-shah-SVA7TyHxojY-unsplash.jpg', 'desc' => 'Kombinasi buah tropis dengan saus madu segar.'],
-                        ['title' => 'Manfaat Sayur', 'img' => 'images/sebastian-coman-photography-eBmyH7oO5wY-unsplash.jpg', 'desc' => 'Mengapa sayuran hijau wajib ada di setiap piring Anda.'],
-                        ['title' => 'Kopi Organik', 'img' => 'images/jimmy-dean-Jvw3pxgeiZw-unsplash.jpg', 'desc' => 'Mengenal biji kopi tanpa pestisida untuk jantung.'],
-                        ['title' => 'Tips Memasak', 'img' => 'images/luisa-brimble-HvXEbkcXjSk-unsplash.jpg', 'desc' => 'Teknik mengukus agar nutrisi tetap terjaga sempurna.']
+                        ['title' => 'Resep Salad', 'img' => 'images/sanket-shah-SVA7TyHxojY-unsplash.jpg'],
+                        ['title' => 'Manfaat Sayur', 'img' => 'images/sebastian-coman-photography-eBmyH7oO5wY-unsplash.jpg'],
+                        ['title' => 'Kopi Organik', 'img' => 'images/jimmy-dean-Jvw3pxgeiZw-unsplash.jpg'],
+                        ['title' => 'Tips Memasak', 'img' => 'images/luisa-brimble-HvXEbkcXjSk-unsplash.jpg']
                     ]; 
                 @endphp
                 @foreach($news as $item)
-                    <div class="bg-white border border-gray-100 rounded-[35px] overflow-hidden hover:shadow-2xl transition-all duration-300 p-5 flex flex-col">
-                        <img src="{{ asset($item['img']) }}" class="w-full h-36 object-cover rounded-[25px] mb-4 shadow-sm">
-                        <h5 class="font-bold text-sm uppercase mb-2 text-slate-800">{{ $item['title'] }}</h5>
-                        <p class="text-[10px] text-gray-500 mb-4 line-clamp-2">{{ $item['desc'] }}</p>
-                        <a href="{{ url('/berita') }}" class="text-amber-500 font-extrabold text-[10px] uppercase mt-auto hover:text-amber-700"> Baca Selengkapnya → </a>
+                    <div class="bg-white border border-gray-100 rounded-[35px] overflow-hidden p-5 flex flex-col shadow-md">
+                        <img src="{{ asset($item['img']) }}" class="w-full h-36 object-cover rounded-[25px] mb-4">
+                        <h5 class="font-bold text-sm uppercase mb-4 text-slate-800">{{ $item['title'] }}</h5>
+                        <a href="{{ url('/berita') }}" class="text-amber-500 font-extrabold text-[10px] mt-auto uppercase">BACA SELENGKAPNYA →</a>
                     </div>
                 @endforeach
             </div>
         </div>
     </section>
 
-    {{-- 5. GALERI SECTION --}}
-    <section class="py-24 max-w-7xl mx-auto px-10">
+    {{-- 5. GALERI KAMI --}}
+    <section class="py-24 max-w-7xl mx-auto px-10 bg-white">
         <h3 class="text-3xl font-extrabold uppercase tracking-widest text-center mb-16 text-slate-900">Galeri Kami</h3>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             @php 
@@ -169,37 +170,22 @@
                 ]; 
             @endphp
             @foreach($gallery as $url)
-                <div class="overflow-hidden rounded-[30px] group shadow-lg aspect-[4/3] border-4 border-white">
-                    <img src="{{ asset($url) }}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500" alt="Gallery">
+                <div class="overflow-hidden rounded-[30px] shadow-lg aspect-[4/3] border-4 border-white group">
+                    <img src="{{ asset($url) }}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
                 </div>
             @endforeach
         </div>
-        <div class="mt-16 text-center">
-            <a href="{{ url('/galeri') }}" class="inline-block bg-black text-white px-16 py-4 text-xs font-bold uppercase tracking-widest shadow-xl hover:bg-gray-900 transition rounded-xl">
-                Lihat Lebih Banyak
-            </a>
-        </div>
     </section>
 
-    {{-- TOMBOL LOGIN MELAYANG (HANYA MUNCUL JIKA BELUM LOGIN) --}}
+    {{-- FLOATING LOGIN --}}
     @guest
     <div class="floating-login">
-        <a href="{{ route('login') }}" 
-           class="flex items-center gap-3 bg-black text-white px-6 py-4 rounded-full shadow-[0_20px_50px_rgba(0,0,0,0.4)] hover:bg-orange-500 hover:-translate-y-2 transition-all duration-300 group border-2 border-white/20">
-            
-            <div class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center group-hover:bg-white/40 transition-colors">
-                <i class="bi bi-person-fill text-lg"></i>
-            </div>
-            
-            <div class="flex flex-col items-start leading-none">
-                <span class="text-sm font-black uppercase tracking-tight">Login Disini</span>
-            </div>
-
-            <i class="bi bi-arrow-right-short text-2xl group-hover:translate-x-1 transition-transform"></i>
+        <a href="{{ route('login') }}" class="flex items-center gap-3 bg-black text-white px-6 py-4 rounded-full shadow-2xl hover:bg-amber-500 transition-all">
+            <i class="bi bi-person-fill"></i>
+            <span class="text-xs font-black uppercase tracking-widest">Login</span>
         </a>
     </div>
     @endguest
 
-    {{-- Bootstrap Icons --}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 @endsection

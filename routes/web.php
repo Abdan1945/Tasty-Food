@@ -19,7 +19,10 @@ Route::get('/tentang', function () { return view('tentang'); });
 Route::get('/kontak', [KontakController::class, 'index'])->name('kontak.index');
 Route::post('/kontak', [KontakController::class, 'store'])->name('kontak.store');
 
+// Route Berita Utama & Detail Berita untuk Pengunjung
 Route::get('/berita', [BeritaController::class, 'indexFront'])->name('berita.front');
+Route::get('/berita/{id}', [BeritaController::class, 'showFront'])->name('berita.show.front'); // <-- Tambahan Baru Bro!
+
 Route::get('/galeri', [GaleriController::class, 'publicIndex'])->name('galeri.public');
 
 // --- AUTH ROUTES ---

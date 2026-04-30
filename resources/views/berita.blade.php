@@ -86,15 +86,14 @@
                         </p>
                         
                         @auth
-                            <button type="button" class="text-amber-500 font-black text-[11px] uppercase tracking-widest bg-transparent border-none p-0 cursor-pointer text-left"
-                                    data-bs-toggle="modal" data-bs-target="#modalBerita{{ $item->id }}">
-                                BACA SELENGKAPNYA
-                            </button>
-                        @else
-                            <a href="{{ route('login') }}" class="text-amber-500 font-black text-[11px] uppercase tracking-widest">
-                                BACA SELENGKAPNYA (LOGIN)
-                            </a>
-                        @endauth
+                <a href="{{ route('berita.show.front', $item->id) }}" class="text-amber-500 font-black text-[11px] uppercase tracking-widest">
+                    BACA SELENGKAPNYA
+                </a>
+                @else
+                    <a href="{{ route('login') }}" class="text-amber-500 font-black text-[11px] uppercase tracking-widest">
+                        BACA SELENGKAPNYA (LOGIN)
+                    </a>
+                @endauth
                     </div>
                 </div>
 

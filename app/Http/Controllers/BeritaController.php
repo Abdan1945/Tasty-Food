@@ -109,9 +109,6 @@ class BeritaController extends Controller
         return redirect()->route('berita.index')->with('success', 'Berita berhasil diupdate!');
     }
 
-    /**
-     * PROSES HAPUS BERITA
-     */
     public function destroy($id)
     {
         $berita = News::findOrFail($id);
@@ -123,5 +120,11 @@ class BeritaController extends Controller
         
         $berita->delete();
         return redirect()->route('berita.index')->with('success', 'Berita berhasil dihapus!');
+    }
+    
+    public function showFront($id)
+    {
+        $item = News::findOrFail($id);
+        return view('berita-detail', compact('item'));
     }
 }
