@@ -11,17 +11,29 @@ use App\Models\News;
 use App\Models\Gallery;
 
 // --- HALAMAN PUBLIK (DEPAN) ---
-Route::get('/', function () { return view('home'); });
-Route::get('/home', function () { return view('home'); })->name('home');
+
+// Route utama (/) dialihkan ke /home biar URL lu konsisten
+Route::get('/', function () {
+    return redirect()->route('home');
+});
+
+// Route /home sekarang jadi yang utama bawa data
+Route::get('/home', function () { 
+    $headlineNews = News::latest()->first(); 
+    $sideNews = News::latest()->skip(1)->take(4)->get();
+    $galleries = Gallery::latest()->take(6)->get();
+    return view('home', compact('headlineNews', 'sideNews', 'galleries')); 
+})->name('home');
+
 Route::get('/tentang', function () { return view('tentang'); });
 
 // --- FIX ROUTE KONTAK ---
 Route::get('/kontak', [KontakController::class, 'index'])->name('kontak.index');
 Route::post('/kontak', [KontakController::class, 'store'])->name('kontak.store');
 
-// Route Berita Utama & Detail Berita untuk Pengunjung
+// Route Berita
 Route::get('/berita', [BeritaController::class, 'indexFront'])->name('berita.front');
-Route::get('/berita/{id}', [BeritaController::class, 'showFront'])->name('berita.show.front'); // <-- Tambahan Baru Bro!
+Route::get('/berita/{id}', [BeritaController::class, 'showFront'])->name('berita.show.front');
 
 Route::get('/galeri', [GaleriController::class, 'publicIndex'])->name('galeri.public');
 
@@ -49,8 +61,16 @@ Route::middleware(['auth'])->group(function () {
         return view('admin.dashboard', compact('totalUser', 'totalBerita', 'totalFoto', 'recentNews', 'recentGalleries'));
     })->name('dashboard');
 
-    Route::resource('dashboard/berita', BeritaController::class)->names(['index'=>'berita.index','create'=>'berita.create','store'=>'berita.store','show'=>'berita.show','edit'=>'berita.edit','update'=>'berita.update','destroy'=>'berita.destroy']);
-    Route::resource('dashboard/galeri', GaleriController::class)->names(['index'=>'admin.gallery.index','create'=>'admin.gallery.create','store'=>'admin.gallery.store','show'=>'admin.gallery.show','edit'=>'admin.gallery.edit','update'=>'admin.gallery.update','destroy'=>'admin.gallery.destroy']);
+    Route::resource('dashboard/berita', BeritaController::class)->names([
+        'index'=>'berita.index','create'=>'berita.create','store'=>'berita.store',
+        'show'=>'berita.show','edit'=>'berita.edit','update'=>'berita.update','destroy'=>'berita.destroy'
+    ]);
+    
+    Route::resource('dashboard/galeri', GaleriController::class)->names([
+        'index'=>'admin.gallery.index','create'=>'admin.gallery.create','store'=>'admin.gallery.store',
+        'show'=>'admin.gallery.show','edit'=>'admin.gallery.edit','update'=>'admin.gallery.update','destroy'=>'admin.gallery.destroy'
+    ]);
+    
     Route::post('/dashboard/galeri/init', [GaleriController::class, 'initStatic'])->name('admin.gallery.init');
 
     Route::get('/dashboard/users', function () {
@@ -70,7 +90,6 @@ Route::middleware(['auth'])->group(function () {
         return back()->with('success', 'Status user berhasil diperbarui');
     })->name('admin.users.block');
 
-    // Route Tambahan buat Kelola Pesan di Admin
     Route::get('/dashboard/kontak', [KontakController::class, 'adminIndex'])->name('admin.kontak.index');
     Route::delete('/dashboard/kontak/{id}', [KontakController::class, 'destroy'])->name('admin.kontak.destroy');
 });
